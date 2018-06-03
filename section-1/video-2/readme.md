@@ -24,6 +24,12 @@ mkdir go
 export GOPATH=/home/emiliano/go
 export PATH=$PATH:$GOPATH/bin
 
+6. Test 
+
+echo $PATH
+echo $GOPATH
+go --version
+
 ### References
 
 [GO Installation Guide](https://golang.org/doc/install)
@@ -31,6 +37,10 @@ export PATH=$PATH:$GOPATH/bin
 ## - Installing DEP
 
 go get -u github.com/golang/dep/cmd/dep
+
+Test:
+
+dep version
 
 ### References
 
@@ -76,6 +86,10 @@ sudo add-apt-repository \
 
 sudo apt-get update
 sudo apt-get install docker-ce
+
+4. Test
+
+sudo docker --version
 
 ### References
 [Get Docker CE for Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
@@ -134,6 +148,10 @@ sdk list java
 
 sdk install 9.0.4-openjdk
 
+4. Test
+
+ java --version
+
 ### Install JMeter
 
 1. Download JMeter from https://jmeter.apache.org/download_jmeter.cgi
@@ -144,8 +162,8 @@ sdk install 9.0.4-openjdk
 cd ~/Soft/apache-jmeter-4.0/bin
 ./jmeter
 
-5. Restart computer.
-6. Lock to launcher
+5. Lock to launcher
+6. Restart computer.
 
 ### References
 
