@@ -30,7 +30,7 @@ echo $PATH
 echo $GOPATH
 go --version
 
-### References
+### Learn More
 
 [GO Installation Guide](https://golang.org/doc/install)
 
@@ -42,7 +42,7 @@ Test:
 
 dep version
 
-### References
+### Learn More
 
 [Dep repository](https://github.com/golang/dep)
 [Consice guide to Dep](https://gist.github.com/subfuzion/12342599e26f5094e4e2d08e9d4ad50d)
@@ -52,7 +52,7 @@ sudo apt-get update
 sudo apt-get install git-core
 git --version
 
-### References
+### Learn More
 [Installing Git on Ubuntu 16.04 LTS](https://www.liquidweb.com/kb/install-git-ubuntu-16-04-lts/)
 
 ## - Download Packt Repo
@@ -91,7 +91,7 @@ sudo apt-get install docker-ce
 
 sudo docker --version
 
-### References
+### Learn More
 [Get Docker CE for Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 
 ## - Installing VS Studio Code and Go Plugin
@@ -114,7 +114,7 @@ Open Visual Studio Code.
 Launch VS Code Quick Open: Ctrl-P
 Copy this in the prompt and hit enter: ext install ms-vscode.Go
 
-### References
+### Learn More
 [Download Visual Studio Code](https://code.visualstudio.com/download)
 [Go programming in VS Code](https://code.visualstudio.com/docs/languages/go)
 
@@ -165,7 +165,7 @@ cd ~/Soft/apache-jmeter-4.0/bin
 5. Lock to launcher
 6. Restart computer.
 
-### References
+### Learn More
 
 [SDKMAN](https://sdkman.io/)
 [Download Jmeter](https://jmeter.apache.org/download_jmeter.cgi)
