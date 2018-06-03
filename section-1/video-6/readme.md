@@ -37,6 +37,10 @@ coll.count()
 coll.find()
 ```
 
+## Postman Collection
+
+[Collection](https://github.com/PacktPublishing/Hands-on-Microservices-with-Go/blob/master/section-1/video-6/S1V6.postman_collection.json)
+
 ## References
 
 [Wikipedia REST: Relationship between URL and HTTP methods](https://en.wikipedia.org/wiki/Representational_state_transfer#Relationship_between_URL_and_HTTP_methods)
