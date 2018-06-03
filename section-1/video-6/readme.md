@@ -7,7 +7,7 @@
 
 ## Entering the Instance and looking around
 
-`sudo docker init -it s1v6mongo /bin/bash`
+`sudo docker exec -it s1v6mongo /bin/bash`
 
 ### Entering Mongo Cli
 

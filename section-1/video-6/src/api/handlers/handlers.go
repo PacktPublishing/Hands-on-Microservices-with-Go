@@ -35,7 +35,7 @@ func (h *Handlers) GetByTZ(w http.ResponseWriter, r *http.Request) {
 	}
 	tzc, err := h.Repo.FindByTimeZone(tz)
 	if err != nil {
-		error500(w, err)
+		error404(w, "timeZone not found.")
 		return
 	}
 	jr, err := json.Marshal(tzc)

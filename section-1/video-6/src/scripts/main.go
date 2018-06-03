@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
-
+ 
 	"github.com/globalsign/mgo"
 )
 
 type timeZoneConvertion struct {
-	TimeZone       string `bson:timeZone json:timeZone`
-	TimeDifference string `bson:timeDifference json:timeDifference`
-	Name           string `bson:name json:name`
+	TimeZone       string `bson:"timeZone" json:"timeZone"`
+	TimeDifference string `bson:"timeDifference" jzon:"timeDifference"`
+	Name           string `bson:"name" json:"name"`
 }
 
 type tzs []timeZoneConvertion
