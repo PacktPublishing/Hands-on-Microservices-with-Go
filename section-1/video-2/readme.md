@@ -1,7 +1,7 @@
 # Packt Publishing - Hands on Microservices with Go
 # Section 1 - Video 2 - Installation of required Software
 
-## Installing Go
+## - Installing Go
 
 1. Download lastest version of Go from from https://golang.org/dl/
 2. Extract it to /usr/local :
@@ -28,7 +28,7 @@ export PATH=$PATH:$GOPATH/bin
 
 [GO Installation Guide](https://golang.org/doc/install)
 
-## Installing DEP
+## - Installing DEP
 
 go get -u github.com/golang/dep/cmd/dep
 
@@ -37,7 +37,7 @@ go get -u github.com/golang/dep/cmd/dep
 [Dep repository](https://github.com/golang/dep)
 [Consice guide to Dep](https://gist.github.com/subfuzion/12342599e26f5094e4e2d08e9d4ad50d)
 
-## Installing Git
+## - Installing Git
 sudo apt-get update
 sudo apt-get install git-core
 git --version
@@ -45,14 +45,14 @@ git --version
 ### References
 [Installing Git on Ubuntu 16.04 LTS](https://www.liquidweb.com/kb/install-git-ubuntu-16-04-lts/)
 
-## Download Packt Repo
+## - Download Packt Repo
 
 cd /home/emiliano/go/src/github.com
 mkdir PacktPublishing
 cd PacktPublishing
 git clone git@github.com:PacktPublishing/Hands-on-Microservices-with-Go.git
 
-### Installing Docker
+## - Installing Docker
 
 1. Remove old versions
 
@@ -77,10 +77,10 @@ sudo add-apt-repository \
 sudo apt-get update
 sudo apt-get install docker-ce
 
-## References
+### References
 [Get Docker CE for Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 
-## Installing VS Studio Code and Go Plugin
+## - Installing VS Studio Code and Go Plugin
 1. Download Debian Package from: https://code.visualstudio.com/download
 
 2. Install :
@@ -104,7 +104,7 @@ Copy this in the prompt and hit enter: ext install ms-vscode.Go
 [Download Visual Studio Code](https://code.visualstudio.com/download)
 [Go programming in VS Code](https://code.visualstudio.com/docs/languages/go)
 
-## Installing Postman
+## - Installing Postman
 
 1. Download Postman from: https://www.getpostman.com/apps
 2. Decompress
@@ -115,7 +115,7 @@ Copy this in the prompt and hit enter: ext install ms-vscode.Go
 [Download Postman](https://www.getpostman.com/apps)
 
 
-##Installing JMeter
+## - Installing JMeter
 
 To use JMeter you must have Java 8 or 9 in your System.
 
