@@ -4,8 +4,11 @@
 ## Learn More
 
 [Go Documentation - http.Handler type](https://golang.org/pkg/net/http/#Handler)
+
 [Go Documentation - http.Handle()](https://golang.org/pkg/net/http/#Handler)
+
 [Go Documentation - http.HandlerFunc()](https://golang.org/pkg/net/http/#HandlerFunc)
+
 [Go Documentation - http.HandleFunc()](https://golang.org/pkg/net/http/#HandleFunc)
 
 
