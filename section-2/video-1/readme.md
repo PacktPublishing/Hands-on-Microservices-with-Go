@@ -1,7 +1,7 @@
 # Packt Publishing - Hands on Microservices with Go
 # Section 2 - Video 1 - HTTP Handler Functions - The Request Object
 
-## Lear More
+## Learn More
 
 [Go Documentation - http.Request Type](https://golang.org/pkg/net/http/#Request)
 
