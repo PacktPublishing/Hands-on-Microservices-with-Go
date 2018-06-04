@@ -42,7 +42,7 @@ func main() {
 
 	//All of the elements we saw on the previous video
 	//are accesible Here
-	req.Header.Set("Accept", ": text/html")
+	req.Header.Set("Accept", "text/html")
 
 	//Does the Request
 	resp, err := client.Do(req)
