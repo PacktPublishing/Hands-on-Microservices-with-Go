@@ -25,7 +25,7 @@ sudo docker volume create s3v6pgdata
 
 ```
 
-sudo docker run -it --name restore-data-container -v s3v6pgdata:/volume -v $YOURHOME/go/src/github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-3/video-4/data:/backup ubuntu \
+sudo docker run -it --name restore-data-container -v s3v6pgdata:/volume -v /home/emiliano/go/src/github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-3/video-4/data:/backup ubuntu \
     sh -c "rm -rf /volume/* /volume/..?* /volume/.[!.]* ; tar -C /volume/ -xjf /backup/s3v6.tar.bz2"
 
 ```
