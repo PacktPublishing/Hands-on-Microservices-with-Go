@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "packt.microservices.go.fibonacci";
+option java_outer_classname = "FibonacciProto";
+
+package fibonacci;
+
+service Fibonacci {
+  rpc Calculate (FibonacciRequest) returns (FibonacciReply) {}
+}
+
+message FibonacciRequest {
+  uint32 number = 1;
+}
+
+message FibonacciReply {
+  uint64 result = 1;
+  uint64 processingTime = 2;
+}
