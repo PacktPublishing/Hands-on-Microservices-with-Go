@@ -35,6 +35,7 @@ go get -u github.com/golang/protobuf/protoc-gen-go
 ## Generate code
 
 ´´´
+
 cd path/to/proto/folder
 
 protoc --go_out=plugins=grpc:. *.proto

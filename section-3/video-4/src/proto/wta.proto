@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "packt.microservices.go.fibonacci";
+option java_outer_classname = "FibonacciProto";
+
+package WTA;
+
+message Player {
+  uint32 id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  bool isRightHanded = 4;
+  google.protobuf.Timestamp birthDate = 5;
+  string countryCode = 6;
+}
+
+message Ranking {
+  uint32 playerId = 1;
+  google.protobuf.Timestamp rankingDate = 2;
+  uint32 ranking = 3;
+  float rankingPoints = 4; 
+}
+
+message PlayerWithRanking {
+  Player player = 1;
+  Ranking ranking = 2;
+}
+
+message PlayerIdRequest {
+  uint32 playerId = 1;
+}
+
+message PlayersReply {
+  repeated Player player = 1;
+}
+
+service WTA {
+  rpc GetPlayerWithHighestRanking (PlayerIdRequest) returns (PlayerWithRanking) {}
+  rpc GetRankingsByPlayerId (PlayerIdRequest) returns (stream Ranking) {}
+  rpc GetPlayers(stream PlayerIdRequest) returns (PlayersReply) {}
+}

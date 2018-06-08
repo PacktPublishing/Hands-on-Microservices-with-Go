@@ -18,7 +18,7 @@ const (
 )
 
 type server struct {
-	//Cache of results - 2^32-1
+	//Cache of results
 	cache [4294967295]uint64
 }
 
