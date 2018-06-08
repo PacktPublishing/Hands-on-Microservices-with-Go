@@ -1,5 +1,5 @@
 # Packt Publishing - Hands on Microservices with Go
-# Section 3 - Video 1 - Working with XML
+# Section 3 - Video 2 - Working with XML
 
 ## Learn More
 
