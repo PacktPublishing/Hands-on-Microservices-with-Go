@@ -40,6 +40,8 @@ openssl req -new -x509 -sha256 -key client.key -out client.pem -days 3650 -subj 
 
 #### TLS
 
+[Mozilla Guide lines for TLS](https://wiki.mozilla.org/Security/Server_Side_TLS)
+
 [Wikipedia - Public Key Certificate](https://en.wikipedia.org/wiki/Public_key_certificate)
 
 [IBM - An overview of the TLS Handshake](https://www.ibm.com/support/knowledgecenter/en/SSFKSJ_7.1.0/com.ibm.mq.doc/sy10660_.htm)

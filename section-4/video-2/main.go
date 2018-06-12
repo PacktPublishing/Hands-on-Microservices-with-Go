@@ -11,12 +11,12 @@ import (
 
 func main() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", myHandler)
+	mux.Handle("/", logDecorator(http.HandlerFunc(myHandler)))
 
 	certManager := autocert.Manager{
 		Prompt:     autocert.AcceptTOS,
 		Cache:      autocert.DirCache("certs"),
-		HostPolicy: autocert.HostWhitelist("metonymie.com"),
+		HostPolicy: autocert.HostWhitelist("httpstest.metonymie.com"),
 	}
 	cfg := &tls.Config{
 		GetCertificate:           certManager.GetCertificate,
@@ -40,8 +40,8 @@ func main() {
 	}
 
 	go func() {
-		log.Println("Starting https server on port: 80")
-		err := http.ListenAndServe(":80", certManager.HTTPHandler(nil))
+		log.Println("Starting http server on port: 80")
+		err := http.ListenAndServe(":80", logDecorator(certManager.HTTPHandler(nil)))
 		if err != nil {
 			log.Fatal("ListenAndServe: ", err)
 		}
@@ -62,10 +62,6 @@ func logDecorator(h http.Handler) http.Handler {
 }
 
 func myHandler(w http.ResponseWriter, r *http.Request) {
-
-	log.Println("Recieved request: " + r.RequestURI + "\n")
-
 	w.WriteHeader(http.StatusOK)
-
 	fmt.Fprintf(w, "Hello HTTPS World")
 }
