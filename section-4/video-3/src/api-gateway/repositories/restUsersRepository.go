@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-4/video-3/src/api-gateway/entities"
 )
@@ -15,12 +16,12 @@ type RestUsersRepository struct{}
 
 func (repo *RestUsersRepository) GetUserByUsername(username string) (*entities.User, error) {
 
-	resp, err := http.Get("127.0.0.1:8000/user/" + username)
-	if resp.StatusCode == 404 {
-		return nil, Err404OnUserRequest
-	}
+	resp, err := http.Get("http://127.0.0.1:8000/user/" + url.PathEscape(username))
 	if err != nil {
 		return nil, err
+	}
+	if resp.StatusCode == 404 {
+		return nil, Err404OnUserRequest
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
@@ -28,13 +29,13 @@ func (repo *RestUsersRepository) GetUserByUsername(username string) (*entities.U
 		return nil, err
 	}
 
-	var user *entities.User
-	err = json.Unmarshal(body, user)
+	var user entities.User
+	err = json.Unmarshal(body, &user)
 	if err != nil {
 		return nil, err
 	}
 
-	return user, nil
+	return &user, nil
 }
 
 /*

@@ -4,8 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-4/video-3/src/api-gateway/entities"
 )
@@ -16,12 +18,12 @@ type RestSessionsRepository struct{}
 
 func (repo *RestSessionsRepository) GetSession(key string) (*entities.Session, error) {
 
-	resp, err := http.Get("127.0.0.1:8001/sessions/" + key)
-	if resp.StatusCode == 404 {
-		return nil, Err404OnSessionRequest
-	}
+	resp, err := http.Get("http://127.0.0.1:8001/session/" + url.PathEscape(key))
 	if err != nil {
 		return nil, err
+	}
+	if resp.StatusCode == 404 {
+		return nil, Err404OnSessionRequest
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
@@ -29,13 +31,13 @@ func (repo *RestSessionsRepository) GetSession(key string) (*entities.Session, e
 		return nil, err
 	}
 
-	var session *entities.Session
-	err = json.Unmarshal(body, session)
+	var session entities.Session
+	err = json.Unmarshal(body, &session)
 	if err != nil {
 		return nil, err
 	}
 
-	return session, nil
+	return &session, nil
 
 }
 
@@ -46,7 +48,9 @@ func (repo *RestSessionsRepository) SetSession(key string, session *entities.Ses
 	}
 
 	buf := bytes.NewBuffer(jsonSession)
-	req, err := http.NewRequest(http.MethodPut, "127.0.0.1:8001/sessions/"+key, buf)
+	url := "http://127.0.0.1:8001/session/" + url.PathEscape(key)
+	fmt.Println(url)
+	req, err := http.NewRequest(http.MethodPut, url, buf)
 	if err != nil {
 		return err
 	}

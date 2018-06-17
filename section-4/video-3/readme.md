@@ -14,7 +14,7 @@ sudo docker volume create usersmariadb
 
 ```
 
-docker run -it -v usersmariadb:/volume -v $USERHOME/go/src/github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-4/video-3/data/:/backup alpine \
+sudo docker run -it -v usersmariadb:/volume -v $USERHOME/go/src/github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-4/video-3/data/:/backup ubuntu \
     sh -c "rm -rf /volume/* /volume/..?* /volume/.[!.]* ; tar -C /volume/ -xjf /backup/usersmariadb.tar.bz2"
 
 
@@ -23,7 +23,7 @@ docker run -it -v usersmariadb:/volume -v $USERHOME/go/src/github.com/PacktPubli
 #### Start MariaDB
 ```
 
-docker run --name users-mariadb -v usersmariadb:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root-password -p 3306:3306 -d mariadb
+sudo docker run --name users-mariadb -v usersmariadb:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root-password -p 3306:3306 -d mariadb
 
 ```
 

@@ -16,12 +16,15 @@
 [[projects]]
   branch = "master"
   name = "github.com/mediocregopher/radix.v2"
-  packages = ["redis"]
+  packages = [
+    "pool",
+    "redis"
+  ]
   revision = "94360be262532d465b7e4760c7a67195d3319a87"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "c29556f1a07bcebd9bbec291a28239edb7c1b220ed58f6c3d1229d7f8f65587a"
+  inputs-digest = "65c3a0c2acfa59816e5491ad8d1946a55a172f49b406a4c67ff49ef237dec372"
   solver-name = "gps-cdcl"
   solver-version = 1

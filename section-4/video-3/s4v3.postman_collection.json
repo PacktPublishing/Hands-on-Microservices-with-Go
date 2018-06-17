@@ -1,0 +1,198 @@
+{
+	"id": "e20beb10-a231-4a97-889c-8010258a882a",
+	"name": "s4v3",
+	"description": null,
+	"auth": null,
+	"events": null,
+	"variables": null,
+	"order": [
+		"5e1bed70-3954-4000-982f-7d36bae504d2",
+		"7eb082b7-43b6-4592-ab3b-6e33b625d5e7",
+		"76f83a7e-68f4-4ce4-8585-1779fa64899a",
+		"a369c704-872c-49d1-a7a8-f82b140309d7",
+		"94dde45e-306c-4862-b8ba-8d7c12d63c3e",
+		"556589e8-7533-4c6e-adda-7cb02d11d704"
+	],
+	"folders_order": [],
+	"folders": [],
+	"requests": [
+		{
+			"id": "556589e8-7533-4c6e-adda-7cb02d11d704",
+			"name": "API Gateway - Restricted Resource 2",
+			"url": "https://localhost:8443/restricted/resource-2",
+			"description": "",
+			"data": [
+				{
+					"key": "username",
+					"value": "veronica.muller",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "sacachispas-futbol-club",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"enabled": false
+				},
+				{
+					"key": "Authorization",
+					"value": "Bearer",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "//Content-Type: application/x-www-form-urlencoded\nAuthorization: Bearer\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "5e1bed70-3954-4000-982f-7d36bae504d2",
+			"name": "User API - User By Username",
+			"url": "localhost:8000/user/veronica.muller",
+			"description": null,
+			"data": [],
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "76f83a7e-68f4-4ce4-8585-1779fa64899a",
+			"name": "Session API - Get",
+			"url": "localhost:8001/session/A_SESSION_NAME",
+			"description": null,
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"rawModeData": "{\n\"session_id\":\"A_SESSION_ID\",\n\"user_id\":1897652,\n\"username\":\"Hello.User\",\n\"first_name\":\"First\",\n\"last_name\":\"Last\"\n}",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "7eb082b7-43b6-4592-ab3b-6e33b625d5e7",
+			"name": "Session API - Put",
+			"url": "localhost:8001/session/A_SESSION_NAME",
+			"description": null,
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"rawModeData": "{\n\"session_id\":\"A_SESSION_ID\",\n\"user_id\":1897652,\n\"username\":\"Hello.User\",\n\"first_name\":\"First\",\n\"last_name\":\"Last\"\n}",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "94dde45e-306c-4862-b8ba-8d7c12d63c3e",
+			"name": "API Gateway - Restricted Resource 1",
+			"url": "https://localhost:8443/restricted/resource-1",
+			"description": "",
+			"data": [
+				{
+					"key": "username",
+					"value": "veronica.muller",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "sacachispas-futbol-club",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"enabled": false
+				},
+				{
+					"key": "Authorization",
+					"value": "Bearer",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "//Content-Type: application/x-www-form-urlencoded\nAuthorization: Bearer\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "a369c704-872c-49d1-a7a8-f82b140309d7",
+			"name": "API Gateway - Authorize",
+			"url": "https://localhost:8443/authorize",
+			"description": "",
+			"data": [
+				{
+					"key": "username",
+					"value": "veronica.muller",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "sacachispas-futbol-club",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"pathVariables": {}
+		}
+	]
+}

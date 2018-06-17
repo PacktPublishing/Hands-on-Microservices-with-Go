@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"crypto/rand"
+	"encoding/base64"
 	"fmt"
 	"net/http"
 	"strings"
@@ -11,7 +12,6 @@ import (
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-4/video-3/src/api-gateway/entities"
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-4/video-3/src/api-gateway/repositories"
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/gorilla/mux"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -24,10 +24,9 @@ type Handler struct {
 }
 
 func (h *Handler) Authorize(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
 
-	username := vars["username"]
-	password := vars["password"]
+	username := r.FormValue("username")
+	password := r.FormValue("password")
 
 	if username == "" || password == "" {
 		w.WriteHeader(http.StatusBadRequest)
@@ -41,8 +40,7 @@ func (h *Handler) Authorize(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 		fmt.Fprint(w, err)
 		return
-	}
-	if err != nil {
+	} else if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprint(w, err)
 		return
@@ -59,8 +57,10 @@ func (h *Handler) Authorize(w http.ResponseWriter, r *http.Request) {
 	now := time.Now()
 	threeMonths := now.AddDate(0, 3, 0)
 
-	jti := make([]byte, 256)
-	_, err = rand.Read(jti)
+	jtiRaw := make([]byte, 128)
+	_, err = rand.Read(jtiRaw)
+	jti := replaceSlashesAndPlus(base64.StdEncoding.EncodeToString(jtiRaw))
+
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprint(w, err)
@@ -81,7 +81,7 @@ func (h *Handler) Authorize(w http.ResponseWriter, r *http.Request) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS512, claims)
 
 	//Sign JWT
-	tokenString, err := token.SignedString(hmacSampleSecret)
+	tokenString, err := token.SignedString([]byte(hmacSampleSecret))
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		fmt.Fprint(w, err)
@@ -129,7 +129,7 @@ func VerifyJWT(f http.HandlerFunc) http.HandlerFunc {
 			}
 
 			// hmacSampleSecret -- Our MacSecret
-			return hmacSampleSecret, nil
+			return []byte(hmacSampleSecret), nil
 		})
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
@@ -170,7 +170,7 @@ func VerifyJWT(f http.HandlerFunc) http.HandlerFunc {
 		}
 
 		//JWT was valid.
-		//Add the data from the session to the context of the Request
+		//Add the jti to the context of the Request
 		ctx := r.Context()
 		ctx = context.WithValue(ctx, Jti, jti)
 		ctx = context.WithValue(ctx, Username, username)
@@ -249,6 +249,12 @@ func (h *Handler) Restricted2(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	firstName := ctx.Value(FirstName)
 	lastName := ctx.Value(LastName)
-	fmt.Fprintln(w, "You have reached Restricted Resource 1")
+	fmt.Fprintln(w, "You have reached Restricted Resource 2")
 	fmt.Fprintf(w, "Hello: %s %s\n", firstName, lastName)
+}
+
+func replaceSlashesAndPlus(str string) string {
+	str = strings.Replace(str, "/", "0", -1)
+	str = strings.Replace(str, "+", "0", -1)
+	return str
 }
