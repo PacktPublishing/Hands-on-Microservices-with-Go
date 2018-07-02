@@ -21,6 +21,7 @@ func main() {
 	//BASIC PPROF HANDLERS
 	r.HandleFunc("/debug/pprof/", pprof.Index)
 	r.HandleFunc("/debug/pprof/profile", pprof.Profile)
+	r.HandleFunc("/debug/pprof/trace", pprof.Trace)
 
 	// Manually add support for paths linked to by index page at /debug/pprof/
 	r.Handle("/debug/pprof/goroutine", pprof.Handler("goroutine"))
