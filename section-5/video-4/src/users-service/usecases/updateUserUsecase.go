@@ -20,7 +20,7 @@ func (uc *UpdateUserUsecase) UpdateUser(user *entities.User) error {
 
 	//Update Cache
 	err = uc.CacheRepo.SetUser(user.Username, user)
-	//Importa error?
+
 	if err != nil {
 		return err
 	}

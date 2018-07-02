@@ -25,7 +25,10 @@ func (handler *Handlers) GetUserByUsernameHandler(w http.ResponseWriter, r *http
 		return
 	}
 	user, err := handler.GetUserUsecase.GetUser(username)
-	//VERIFICAR TYPO DE ERROR - 404
+
+	//Verify 404
+	//...
+
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprint(w, err)
