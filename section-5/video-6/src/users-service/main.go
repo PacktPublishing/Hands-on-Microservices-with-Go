@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -57,6 +58,7 @@ func main() {
 	r.HandleFunc("/user/{username}", countRequests(measureRequests(handler.GetUserByUsernameHandler))).Methods("GET")
 	r.Handle("/metrics", promhttp.Handler())
 
+	fmt.Println("Starting server on Port: 8000")
 	log.Fatal(http.ListenAndServe(":8000", r))
 }
 

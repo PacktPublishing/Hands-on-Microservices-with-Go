@@ -26,7 +26,7 @@
       </ThreadGroup>
       <hashTree>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
-          <stringProp name="filename">/home/emiliano/go/src/github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-5/video-4/username-dumps/usernames-1000.txt</stringProp>
+          <stringProp name="filename">/home/emiliano/go/src/github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-5/video-1/username-dumps/usernames-10000-0.csv</stringProp>
           <stringProp name="fileEncoding"></stringProp>
           <stringProp name="variableNames"></stringProp>
           <boolProp name="ignoreFirstLine">true</boolProp>

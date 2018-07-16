@@ -1,0 +1,81 @@
+version: '3'
+services:
+  users-api:
+    build: .
+    container_name: "users-api"
+    ports:
+      - "8000:8000"
+    networks:
+      - user-network
+    depends_on:
+      - users-cache-redis
+      - users-mariadb
+
+  users-cache-redis:
+    image: "redis"
+    container_name: "users-cache-redis"
+    networks:
+      - user-network
+
+  users-mariadb:
+    image: "mariadb"
+    container_name: "users-mariadb"
+    networks:
+      - user-network
+    volumes:
+      - usersmariadb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD:root-password
+
+  prometheus:
+    image: "prom/prometheus"
+    container_name: "prometheus"
+    ports:
+      - "9090:9090"
+    networks:
+      - user-network
+    volumes:
+      - /home/emiliano/go/src/github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-6/video-3/conf/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - users-api
+      - cadvisor
+      - grafana
+
+  cadvisor:
+    image: "google/cadvisor"
+    container_name: "cadvisor"
+    ports:
+      - "9091:8080"
+    networks:
+      - user-network
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  node-exporter:
+    image: "prom/node-exporter"
+    container_name: "node_exporter"
+    ports:
+      - "9092:9100"
+    networks:
+      - user-network
+
+  grafana:
+    image: "grafana/grafana"
+    container_name: "grafana"
+    ports:
+      - "9093:3000"
+    networks:
+      - user-network
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=PACKT
+      - GF_USERS_ALLOW_SIGN_UP=false
+
+networks:
+  user-network:
+
+volumes:
+  usersmariadb:
+    external: true
