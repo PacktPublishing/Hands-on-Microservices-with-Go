@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-1/src/users-service/utils/appErrors"
 
@@ -22,7 +23,8 @@ func (handler *Handlers) GetUserByUsername(w http.ResponseWriter, r *http.Reques
 	vars := mux.Vars(r)
 
 	username, ok := vars["username"]
-	if !ok {
+	username = strings.Trim(username, " ")
+	if !ok || username == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprint(w, "Username parameter is required.")
 		return
@@ -55,7 +57,8 @@ func (handler *Handlers) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	username, ok := vars["username"]
 	if !ok {
-		w.WriteHeader(http.StatusNotFound)
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprint(w, "Username parameter is required.")
 		return
 	}
 
@@ -79,11 +82,34 @@ func (handler *Handlers) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	//Verify it's same user as username
 	if username != user.Username {
 		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintln(w, "Username on Query is different than Username on body,")
 		return
 	}
 
-	//I SHOULD VERIFY THE DATA
-	//......
+	//Verify The Data
+	if user.Email == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintln(w, "Email is required,")
+		return
+	}
+
+	if user.FirstName == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintln(w, "FirstName is required,")
+		return
+	}
+
+	if user.LastName == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintln(w, "FirstName is required,")
+		return
+	}
+
+	if user.Password == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintln(w, "Password is required,")
+		return
+	}
 
 	err = handler.UpdateUserUsecase.UpdateUser(user)
 	if err != nil {

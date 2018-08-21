@@ -1,6 +1,8 @@
 package usecases
 
 import (
+	"log"
+
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-1/src/users-service/entities"
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-1/src/users-service/repositories"
 )
@@ -24,9 +26,11 @@ func (uc *UpdateUserImpl) UpdateUser(user *entities.User) error {
 
 	//Update Cache
 	err = uc.CacheRepo.SetUser(user.Username, user)
-	//Importa error?
+
+	//If there was an error when setting cache, we log it but we do not return it
 	if err != nil {
-		return err
+		//There was an error different than it not being on cache.
+		log.Println("Error on Cache.", err.Error())
 	}
 
 	return nil

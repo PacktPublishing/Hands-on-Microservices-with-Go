@@ -1,10 +1,10 @@
 package usecases
 
 import (
-	"errors"
 	"testing"
 
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-1/src/users-service/entities"
+	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-1/src/users-service/utils/appErrors"
 )
 
 func Test_GetUser_InCache(t *testing.T) {
@@ -60,6 +60,18 @@ func Test_GetUser_NotInCache(t *testing.T) {
 }
 
 func Test_GetUser_NotInCacheOrDB(t *testing.T) {
+	cacheRepo := &MockUsersCacheRepository{}
+
+	uc := &GetUserImpl{
+		CacheRepo: cacheRepo,
+		Repo:      &MockUsersRepository{},
+	}
+
+	_, err := uc.GetUser("Test3")
+	if err != appErrors.ErrorNotFound {
+		t.Errorf("Test failed. Expected not Found Error.")
+	}
+
 }
 
 type MockUsersRepository struct{}
@@ -72,8 +84,7 @@ func (m *MockUsersRepository) GetUserByUsername(username string) (*entities.User
 			Email:    "test2@example.com",
 		}, nil
 	} else {
-		//TODO: Error Flow!
-		return nil, errors.New("FIX THIS")
+		return nil, appErrors.ErrorNotFound
 	}
 }
 
@@ -83,7 +94,6 @@ func (m *MockUsersRepository) GetUserByID(userID uint32) (*entities.User, error)
 }
 
 func (m *MockUsersRepository) UpdateUser(user *entities.User) error {
-	//Not Used on this example tests.
 	return nil
 }
 
@@ -99,8 +109,7 @@ func (m *MockUsersCacheRepository) GetUser(username string) (*entities.User, err
 			Email:    "test1@example.com",
 		}, nil
 	} else {
-		//TODO: Error Flow!
-		return nil, errors.New("FIX THIS")
+		return nil, appErrors.ErrorNotFoundOnDB
 	}
 }
 

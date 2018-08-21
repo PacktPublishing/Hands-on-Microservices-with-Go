@@ -5,8 +5,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-1/src/users-service/handlers"
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-1/src/users-service/repositories"
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-1/src/users-service/usecases"
@@ -32,7 +30,6 @@ func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/user/{username}", handler.GetUserByUsername).Methods("GET")
-	r.Handle("/metrics", promhttp.Handler())
 
 	fmt.Println("Starting server on Port: 8000")
 	log.Fatal(http.ListenAndServe(":8000", r))
