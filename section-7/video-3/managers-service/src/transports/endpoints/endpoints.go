@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"strconv"
 
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3/managers-service/src/service"
 	"github.com/gorilla/mux"
@@ -18,12 +19,14 @@ import (
 var (
 	// ManageID parameter is missing. Respond 404.
 	ErrNoManagerID = errors.New("ManagerID is required.")
+	// ManagerID was not a number. Respond 404
+	ErrManagerIDNotNumber = errors.New("ManagerID is not a number")
 )
 
-func MakeInsertManagerPlayerEndpoint(svc service.ManagerService) endpoint.Endpoint {
+func MakeInsertManagerPlayerEndpoint(svc service.ManagersService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(requests.InsertManagerPlayerRequest)
-		v, err := svc.InsertManagerPlayerRequest(req.ManagerID, req.PlayerID)
+		err := svc.InsertManagerPlayer(req.ManagerID, req.PlayerID)
 		if err != nil {
 			return responses.InsertManagerPlayerResponse{err.Error()}, nil
 		}
@@ -31,11 +34,14 @@ func MakeInsertManagerPlayerEndpoint(svc service.ManagerService) endpoint.Endpoi
 	}
 }
 
-func MakeGetManagerByIDEndpoint(svc service.ManagerService) endpoint.Endpoint {
+func MakeGetManagerByIDEndpoint(svc service.ManagersService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(requests.GetManagerByIDRequest)
-		v := svc.GetManagerByID(req.ManagerID)
-		return responses.GetManagerByIDResponse{v}, nil
+		v, err := svc.GetManagerByID(req.ManagerID)
+		if err != nil {
+			return responses.GetManagerByIDResponse{nil, err.Error()}, err
+		}
+		return responses.GetManagerByIDResponse{v, ""}, nil
 	}
 }
 
@@ -50,14 +56,21 @@ func DecodeInsertManagerPlayerRequest(_ context.Context, r *http.Request) (inter
 func DecodeGetManagerByIDRequest(_ context.Context, r *http.Request) (interface{}, error) {
 
 	vars := mux.Vars(r)
-	id, ok := vars["id"]
+	idstr, ok := vars["id"]
 	if !ok {
 		return nil, ErrNoManagerID
 	}
-	return responses.GetManagerIDResponse{ManagerID: id}, nil
+
+	id, err := strconv.Atoi(idstr)
+	if err != nil {
+		return nil, ErrManagerIDNotNumber
+	}
+
+	return requests.GetManagerByIDRequest{ManagerID: uint32(id)}, nil
 }
 
-func DecodeInsertManagerPlayerResponse(_ context.Context, r *http.Response) (interface{}, error) {
+/*
+func EncodeInsertManagerPlayerResponse(_ context.Context, r *http.Response) (interface{}, error) {
 	var response responses.InsertManagerPlayerResponse
 	if err := json.NewDecoder(r.Body).Decode(&response); err != nil {
 		return nil, err
@@ -65,10 +78,14 @@ func DecodeInsertManagerPlayerResponse(_ context.Context, r *http.Response) (int
 	return response, nil
 }
 
-func DecodeGetManagerByIDResponse(_ context.Context, r *http.Response) (interface{}, error) {
+func EncodeGetManagerByIDResponse(_ context.Context, r *http.Response) (interface{}, error) {
 	var response responses.GetManagerByIDResponse
 	if err := json.NewDecoder(r.Body).Decode(&response); err != nil {
 		return nil, err
 	}
 	return response, nil
+}
+*/
+func EncodeResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
+	return json.NewEncoder(w).Encode(response)
 }

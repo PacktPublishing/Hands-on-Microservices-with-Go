@@ -13,7 +13,7 @@ type ManagersService interface {
 
 //Service Implementation
 type ManagersServiceImpl struct {
-	Repo repositories.MariaDBManagersRepository
+	Repo *repositories.MariaDBManagersRepository
 }
 
 func (srv ManagersServiceImpl) InsertManagerPlayer(managerID uint32, playerID uint32) error {

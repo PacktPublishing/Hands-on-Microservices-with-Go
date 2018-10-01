@@ -18,23 +18,23 @@ func main() {
 
 	repo := repositories.NewMariaDBManagersRepository()
 
-	srv := service.ManagersServiceImpl{}
-	srv.Repo = repo
+	svc := service.ManagersServiceImpl{}
+	svc.Repo = repo
 
-	insertManagerPlayerEndpoint := endpoints.MakeInsertManagerPlayerEndpoint(srv)
+	insertManagerPlayerEndpoint := endpoints.MakeInsertManagerPlayerEndpoint(svc)
 
 	r.Methods("POST").Path("/manager-player/").Handler(httptransport.NewServer(
 		insertManagerPlayerEndpoint,
 		endpoints.DecodeInsertManagerPlayerRequest,
-		endpoints.EncodeInsertManagerPlayerRequest,
+		endpoints.EncodeResponse,
 	))
 
-	getManagerByIDEndpoint := endpoints.MakeInsertManagerPlayerEndpoint(srv)
+	getManagerByIDEndpoint := endpoints.MakeInsertManagerPlayerEndpoint(svc)
 
 	r.Methods("GET").Path("/manager/{id}").Handler(httptransport.NewServer(
 		getManagerByIDEndpoint,
 		endpoints.DecodeGetManagerByIDRequest,
-		endpoints.EncodeGetManagerByIDRequest,
+		endpoints.EncodeResponse,
 	))
 
 	srv := &http.Server{
