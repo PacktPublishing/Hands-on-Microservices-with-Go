@@ -28,9 +28,9 @@ func MakeInsertManagerPlayerEndpoint(svc service.ManagersService) endpoint.Endpo
 		req := request.(requests.InsertManagerPlayerRequest)
 		err := svc.InsertManagerPlayer(req.ManagerID, req.PlayerID)
 		if err != nil {
-			return responses.InsertManagerPlayerResponse{err.Error()}, nil
+			return responses.InsertManagerPlayerResponse{Err: err.Error()}, nil
 		}
-		return responses.InsertManagerPlayerResponse{""}, nil
+		return responses.InsertManagerPlayerResponse{Err: ""}, nil
 	}
 }
 
@@ -39,9 +39,9 @@ func MakeGetManagerByIDEndpoint(svc service.ManagersService) endpoint.Endpoint {
 		req := request.(requests.GetManagerByIDRequest)
 		v, err := svc.GetManagerByID(req.ManagerID)
 		if err != nil {
-			return responses.GetManagerByIDResponse{nil, err.Error()}, err
+			return responses.GetManagerByIDResponse{Manager: nil, Err: err.Error()}, nil
 		}
-		return responses.GetManagerByIDResponse{v, ""}, nil
+		return responses.GetManagerByIDResponse{Manager: v, Err: ""}, nil
 	}
 }
 
@@ -69,23 +69,38 @@ func DecodeGetManagerByIDRequest(_ context.Context, r *http.Request) (interface{
 	return requests.GetManagerByIDRequest{ManagerID: uint32(id)}, nil
 }
 
-/*
-func EncodeInsertManagerPlayerResponse(_ context.Context, r *http.Response) (interface{}, error) {
-	var response responses.InsertManagerPlayerResponse
-	if err := json.NewDecoder(r.Body).Decode(&response); err != nil {
-		return nil, err
+func EncodeGetManagerByIDResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
+
+	res, ok := response.(responses.GetManagerByIDResponse)
+	if !ok {
+		w.WriteHeader(500)
+		return errors.New("Error when casting response.")
 	}
-	return response, nil
+	if res.Err != "" {
+		w.WriteHeader(500)
+		return errors.New(res.Err)
+	}
+	str, err := json.Marshal(res)
+	if err != nil {
+		w.WriteHeader(500)
+		return err
+	}
+	w.Write(str)
+	return nil
 }
 
-func EncodeGetManagerByIDResponse(_ context.Context, r *http.Response) (interface{}, error) {
-	var response responses.GetManagerByIDResponse
-	if err := json.NewDecoder(r.Body).Decode(&response); err != nil {
-		return nil, err
+func EncodeInsertManagerPlayerResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
+
+	res, ok := response.(responses.InsertManagerPlayerResponse)
+	if !ok {
+		w.WriteHeader(500)
+		return errors.New("Error when casting response.")
 	}
-	return response, nil
-}
-*/
-func EncodeResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
-	return json.NewEncoder(w).Encode(response)
+	if res.Err != "" {
+		w.WriteHeader(500)
+		return errors.New(res.Err)
+	}
+	w.WriteHeader(201)
+	w.Write([]byte("Write was succesful."))
+	return nil
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -23,28 +24,29 @@ func main() {
 
 	insertManagerPlayerEndpoint := endpoints.MakeInsertManagerPlayerEndpoint(svc)
 
-	r.Methods("POST").Path("/manager-player/").Handler(httptransport.NewServer(
+	r.Methods("POST").Path("/manager-player").Handler(httptransport.NewServer(
 		insertManagerPlayerEndpoint,
 		endpoints.DecodeInsertManagerPlayerRequest,
-		endpoints.EncodeResponse,
+		endpoints.EncodeInsertManagerPlayerResponse,
 	))
 
-	getManagerByIDEndpoint := endpoints.MakeInsertManagerPlayerEndpoint(svc)
+	getManagerByIDEndpoint := endpoints.MakeGetManagerByIDEndpoint(svc)
 
 	r.Methods("GET").Path("/manager/{id}").Handler(httptransport.NewServer(
 		getManagerByIDEndpoint,
 		endpoints.DecodeGetManagerByIDRequest,
-		endpoints.EncodeResponse,
+		endpoints.EncodeGetManagerByIDResponse,
 	))
 
 	srv := &http.Server{
 		Handler: r,
-		Addr:    "127.0.0.1:8000",
+		Addr:    "127.0.0.1:8080",
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
 
+	fmt.Println("Starting server on port: 8080")
 	log.Fatal(srv.ListenAndServe())
 
 	repo.Close()

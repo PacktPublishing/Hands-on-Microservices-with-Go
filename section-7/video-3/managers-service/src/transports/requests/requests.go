@@ -1,8 +1,8 @@
 package requests
 
 type InsertManagerPlayerRequest struct {
-	ManagerID uint32
-	PlayerID  uint32
+	ManagerID uint32 `json:"manager_id"`
+	PlayerID  uint32 `json:"player_id"`
 }
 
 type GetManagerByIDRequest struct {

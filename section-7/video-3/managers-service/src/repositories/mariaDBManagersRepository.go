@@ -42,7 +42,7 @@ func (repo *MariaDBManagersRepository) InsertManagerPlayer(managerID uint32, pla
 
 func (repo *MariaDBManagersRepository) GetManagerByID(managerID uint32) (*entities.Manager, error) {
 	m := &entities.Manager{}
-	row := repo.db.QueryRow("Select id, manager, account from manager where username=?", managerID)
+	row := repo.db.QueryRow("Select id, manager, account from manager where id=?", managerID)
 	err := row.Scan(&m.ID, &m.Name, &m.Account)
 	if err != nil {
 		return nil, err
