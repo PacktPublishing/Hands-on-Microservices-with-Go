@@ -18,6 +18,7 @@ func main() {
 	r := mux.NewRouter()
 
 	repo := repositories.NewMariaDBManagersRepository()
+	defer repo.Close()
 
 	svc := service.ManagersServiceImpl{}
 	svc.Repo = repo
@@ -49,5 +50,4 @@ func main() {
 	fmt.Println("Starting server on port: 8080")
 	log.Fatal(srv.ListenAndServe())
 
-	repo.Close()
 }
