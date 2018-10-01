@@ -1,10 +1,10 @@
-package repository
+package repositories
 
 import (
 	"database/sql"
 	"log"
 
-	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3/entities"
+	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3/managers-service/src/entities"
 	_ "github.com/go-sql-driver/mysql"
 )
 

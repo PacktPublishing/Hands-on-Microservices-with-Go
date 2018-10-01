@@ -1,7 +1,7 @@
 package entities
 
 type Manager struct {
-	ID      uint32
-	Name    string
-	Account uint32
+	ID      uint32 `json:"id"`
+	Name    string `json:"name"`
+	Account uint32 `json:"account"`
 }
