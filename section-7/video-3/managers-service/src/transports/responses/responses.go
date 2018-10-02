@@ -10,3 +10,8 @@ type GetManagerByIDResponse struct {
 	Manager *entities.Manager `json: manager,omitempty`
 	Err     string            `json:"error,omitempty"`
 }
+
+type GetManagerPlayerIDsResponse struct {
+	PlayerIDs []uint32 `json: player_ids,omitempty`
+	Err       string   `json:"error,omitempty"`
+}

@@ -45,6 +45,17 @@ func MakeGetManagerByIDEndpoint(svc service.ManagersService) endpoint.Endpoint {
 	}
 }
 
+func MakeGetManagerPlayerIDsEndpoint(svc service.ManagersService) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		req := request.(requests.GetManagerPlayerIDsRequest)
+		v, err := svc.GetManagerPlayerIDs(req.ManagerID)
+		if err != nil {
+			return responses.GetManagerPlayerIDsResponse{PlayerIDs: nil, Err: err.Error()}, nil
+		}
+		return responses.GetManagerPlayerIDsResponse{PlayerIDs: v, Err: ""}, nil
+	}
+}
+
 func DecodeInsertManagerPlayerRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	var request requests.InsertManagerPlayerRequest
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
@@ -69,9 +80,45 @@ func DecodeGetManagerByIDRequest(_ context.Context, r *http.Request) (interface{
 	return requests.GetManagerByIDRequest{ManagerID: uint32(id)}, nil
 }
 
+func DecodeGetManagerPlayerIDsRequest(_ context.Context, r *http.Request) (interface{}, error) {
+
+	vars := mux.Vars(r)
+	idstr, ok := vars["id"]
+	if !ok {
+		return nil, ErrNoManagerID
+	}
+
+	id, err := strconv.Atoi(idstr)
+	if err != nil {
+		return nil, ErrManagerIDNotNumber
+	}
+
+	return requests.GetManagerPlayerIDsRequest{ManagerID: uint32(id)}, nil
+}
+
 func EncodeGetManagerByIDResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
 
 	res, ok := response.(responses.GetManagerByIDResponse)
+	if !ok {
+		w.WriteHeader(500)
+		return errors.New("Error when casting response.")
+	}
+	if res.Err != "" {
+		w.WriteHeader(500)
+		return errors.New(res.Err)
+	}
+	str, err := json.Marshal(res)
+	if err != nil {
+		w.WriteHeader(500)
+		return err
+	}
+	w.Write(str)
+	return nil
+}
+
+func EncodeGetManagerPlayerIDsResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
+
+	res, ok := response.(responses.GetManagerPlayerIDsResponse)
 	if !ok {
 		w.WriteHeader(500)
 		return errors.New("Error when casting response.")

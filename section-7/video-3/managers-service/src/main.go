@@ -31,6 +31,14 @@ func main() {
 		endpoints.EncodeInsertManagerPlayerResponse,
 	))
 
+	getManagerPlayerIDs := endpoints.MakeGetManagerPlayerIDsEndpoint(svc)
+
+	r.Methods("GET").Path("/manager/players/{id}").Handler(httptransport.NewServer(
+		getManagerPlayerIDs,
+		endpoints.DecodeGetManagerPlayerIDsRequest,
+		endpoints.EncodeGetManagerPlayerIDsResponse,
+	))
+
 	getManagerByIDEndpoint := endpoints.MakeGetManagerByIDEndpoint(svc)
 
 	r.Methods("GET").Path("/manager/{id}").Handler(httptransport.NewServer(

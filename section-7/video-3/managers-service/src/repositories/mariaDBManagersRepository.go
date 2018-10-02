@@ -49,3 +49,21 @@ func (repo *MariaDBManagersRepository) GetManagerByID(managerID uint32) (*entiti
 	}
 	return m, nil
 }
+
+func (repo *MariaDBManagersRepository) GetManagerPlayers(managerID uint32) ([]uint32, error) {
+	playerIDs := make([]uint32, 0, 4)
+	rows, err := repo.db.Query("Select player_id from manager_player where manager_id=?", managerID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var playerID uint32
+		if err := rows.Scan(&playerID); err != nil {
+			return nil, err
+		}
+		playerIDs = append(playerIDs, playerID)
+	}
+
+	return playerIDs, nil
+}

@@ -9,6 +9,7 @@ import (
 type ManagersService interface {
 	InsertManagerPlayer(managerID uint32, playerID uint32) error
 	GetManagerByID(managerID uint32) (*entities.Manager, error)
+	GetManagerPlayerIDs(managerID uint32) ([]uint32, error)
 }
 
 //Service Implementation
@@ -24,6 +25,11 @@ func (srv ManagersServiceImpl) InsertManagerPlayer(managerID uint32, playerID ui
 func (srv ManagersServiceImpl) GetManagerByID(managerID uint32) (*entities.Manager, error) {
 	manager, err := srv.Repo.GetManagerByID(managerID)
 	return manager, err
+}
+
+func (srv ManagersServiceImpl) GetManagerPlayerIDs(managerID uint32) ([]uint32, error) {
+	playerIDs, err := srv.Repo.GetManagerPlayers(managerID)
+	return playerIDs, err
 }
 
 // ServiceMiddleware is a chainable behavior modifier for ManagersService.

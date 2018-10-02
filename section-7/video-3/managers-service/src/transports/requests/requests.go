@@ -8,3 +8,7 @@ type InsertManagerPlayerRequest struct {
 type GetManagerByIDRequest struct {
 	ManagerID uint32
 }
+
+type GetManagerPlayerIDsRequest struct {
+	ManagerID uint32
+}
