@@ -2,6 +2,7 @@ package usecases
 
 import (
 	"errors"
+	"sort"
 	"sync"
 
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3/api-gateway-1/src/entities"
@@ -96,6 +97,8 @@ func (uc GetAllUserVideos) GetAllVideosFromUser(userID uint32) (*AllUserVideosDT
 	for i := 0; i < count; i++ {
 		pwe = append(pwe, <-ch)
 	}
+
+	sort.Sort(pwe)
 
 	errsStr := ""
 

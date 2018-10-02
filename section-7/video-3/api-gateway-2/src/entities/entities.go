@@ -16,3 +16,10 @@ type Manager struct {
 	Name    string `json:"name"`
 	Account uint32 `json:"account"`
 }
+
+type Match struct {
+	ID       uint32    `json:"id"`
+	WinnerID uint32    `json:"winner_id"`
+	LoserID  uint32    `json:"loser_id"`
+	Date     time.Time `json:"date"`
+}

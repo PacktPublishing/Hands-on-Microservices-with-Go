@@ -7,7 +7,7 @@ import (
 )
 
 func (h *Handler) GetAllUserVideos(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
+
 	ctx := r.Context()
 	userID := ctx.Value(UserID).(uint32)
 
@@ -16,6 +16,7 @@ func (h *Handler) GetAllUserVideos(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
+		return
 	}
 
 	json, err := json.Marshal(allUserVideos)

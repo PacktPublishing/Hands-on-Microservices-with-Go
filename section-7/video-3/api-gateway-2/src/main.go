@@ -1,0 +1,35 @@
+package main
+
+import (
+	"fmt"
+	"log"
+	"net/http"
+	"time"
+
+	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3/api-gateway-2/src/handlers"
+	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3/api-gateway-2/src/repositories"
+	"github.com/gorilla/mux"
+)
+
+func main() {
+
+	r := mux.NewRouter()
+
+	h := &handlers.Handler{
+		ManagersRepo: repositories.RestManagersRepository{},
+		WTARepo:      repositories.RestWTARepository{},
+	}
+
+	r.HandleFunc("/manager/players/{id}", h.GetManagerPlayers)
+
+	srv := &http.Server{
+		Handler: r,
+		Addr:    "127.0.0.1:8080",
+		// Good practice: enforce timeouts for servers you create!
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+
+	fmt.Println("Starting server on port: 8080")
+	log.Fatal(srv.ListenAndServe())
+}
