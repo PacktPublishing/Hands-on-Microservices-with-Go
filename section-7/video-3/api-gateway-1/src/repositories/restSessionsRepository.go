@@ -18,7 +18,7 @@ type RestSessionsRepository struct{}
 
 func (repo *RestSessionsRepository) GetSession(key string) (*entities.Session, error) {
 
-	resp, err := http.Get("http://127.0.0.1:8001/session/" + url.PathEscape(key))
+	resp, err := http.Get("http://sessions-service:8001/session/" + url.PathEscape(key))
 	if err != nil {
 		return nil, err
 	}

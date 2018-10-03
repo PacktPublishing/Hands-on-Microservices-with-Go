@@ -14,7 +14,7 @@ type PsqlRepo struct {
 }
 
 func NewWTARepository() *PsqlRepo {
-	connStr := "postgres://packt:packt@localhost/wta?sslmode=disable"
+	connStr := "postgres://packt:packt@wta-psql/wta?sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err.Error())

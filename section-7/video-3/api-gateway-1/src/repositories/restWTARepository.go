@@ -19,7 +19,7 @@ func (repo *RestWTARepository) GetMatchByMatchID(matchID uint32) (*entities.Matc
 
 	matchIDStr := strconv.Itoa(int(matchID))
 
-	resp, err := http.Get("http://127.0.0.1:8000/match/" + url.PathEscape(matchIDStr))
+	resp, err := http.Get("http://wta-service:8000/match/" + url.PathEscape(matchIDStr))
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func (repo *RestWTARepository) GetPlayerByPlayerID(playerID uint32) (*entities.P
 
 	playerIDStr := strconv.Itoa(int(playerID))
 
-	resp, err := http.Get("http://127.0.0.1:8000/manager/" + url.PathEscape(playerIDStr))
+	resp, err := http.Get("http://wta-service:8000/match/" + url.PathEscape(playerIDStr))
 	if err != nil {
 		return nil, err
 	}

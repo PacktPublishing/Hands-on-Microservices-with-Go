@@ -16,7 +16,7 @@ type MySQLUserRepository struct {
 func NewMySQLUserRepository() *MySQLUserRepository {
 
 	// Create the database handle, confirm driver is present
-	db, err := sql.Open("mysql", "packt:packt@/users?parseTime=true")
+	db, err := sql.Open("mysql", "root:root-password@tcp(users-mariadb:3306)/users?parseTime=true")
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -16,15 +16,15 @@ type RestManagersRepository struct{}
 var Err404OnManagerRequest = errors.New("404 Not Found on Manager Request")
 
 type ManagerPlayerIDsDTO struct {
-	PlayerIDs []uint32 `json:"player_ids,omitempty"`
+	PlayerIDs []uint32 `json:"PlayerIDs,omitempty"`
 	Err       string   `json:"error,omitempty"`
 }
 
 func (repo *RestManagersRepository) GetManagerByManagerID(managerID uint32) (*entities.Manager, error) {
 
 	managerIDStr := strconv.Itoa(int(managerID))
-
-	resp, err := http.Get("http://127.0.0.1:8000/manager/" + url.PathEscape(managerIDStr))
+	url := "http://managers-service:8080/manager/" + url.PathEscape(managerIDStr)
+	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +50,7 @@ func (repo *RestManagersRepository) GetManagerPlayers(managerID uint32) (*Manage
 
 	managerIDStr := strconv.Itoa(int(managerID))
 
-	resp, err := http.Get("http://127.0.0.1:8000/manager/players/" + url.PathEscape(managerIDStr))
+	resp, err := http.Get("http://managers-service:8080/manager/players/" + url.PathEscape(managerIDStr))
 	if err != nil {
 		return nil, err
 	}

@@ -15,7 +15,8 @@ type MariaDBManagersRepository struct {
 func NewMariaDBManagersRepository() *MariaDBManagersRepository {
 
 	// Create the database handle, confirm driver is present
-	db, err := sql.Open("mysql", "packt:packt@/managers?parseTime=true")
+	//	db, err := sql.Open("mysql", "packt:packt@tcp(managers-mariadb:3306)/users?parseTime=true")
+	db, err := sql.Open("mysql", "root:root-password@tcp(managers-mariadb:3306)/managers?parseTime=true")
 	if err != nil {
 		log.Fatal(err)
 	}

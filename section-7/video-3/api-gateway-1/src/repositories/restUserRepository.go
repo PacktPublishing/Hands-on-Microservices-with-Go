@@ -43,7 +43,7 @@ func (repo *RestUsersRepository) GetUserByUserID(userID uint32) (*entities.User,
 
 	userIDStr := strconv.Itoa(int(userID))
 
-	resp, err := http.Get("http://127.0.0.1:8000/user/" + url.PathEscape(userIDStr))
+	resp, err := http.Get("http://users-service:8080/user/" + url.PathEscape(userIDStr))
 	if err != nil {
 		return nil, err
 	}

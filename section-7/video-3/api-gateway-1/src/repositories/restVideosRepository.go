@@ -19,7 +19,7 @@ func (repo *RestVideosRepository) GetAllVideosByUserID(userID uint32) ([]*entiti
 
 	videoIDStr := strconv.Itoa(int(userID))
 
-	resp, err := http.Get("http://127.0.0.1:8000/video/" + url.PathEscape(videoIDStr))
+	resp, err := http.Get("http://videos-service:8080/video/" + url.PathEscape(videoIDStr))
 	if err != nil {
 		return nil, err
 	}

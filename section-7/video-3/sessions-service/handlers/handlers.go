@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-4/video-3/src/sessions-service/entities"
-	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-4/video-3/src/sessions-service/repositories"
+	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3/sessions-service/entities"
+	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3/sessions-service/repositories"
 	"github.com/gorilla/mux"
 )
 

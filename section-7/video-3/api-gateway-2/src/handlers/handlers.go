@@ -3,11 +3,14 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"strconv"
 	"sync"
 
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3/api-gateway-2/src/entities"
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3/api-gateway-2/src/repositories"
+	"github.com/gorilla/mux"
 )
 
 type ctxKey int
@@ -28,8 +31,10 @@ type ManagerPlayersDTO struct {
 
 func (h *Handler) GetManagerPlayers(w http.ResponseWriter, r *http.Request) {
 
-	ctx := r.Context()
-	managerID := ctx.Value(ManagerID).(uint32)
+	vars := mux.Vars(r)
+
+	managerIDInt, err := strconv.Atoi(vars["id"])
+	managerID := uint32(managerIDInt)
 
 	var manager *entities.Manager
 	var managerErr error
@@ -41,19 +46,27 @@ func (h *Handler) GetManagerPlayers(w http.ResponseWriter, r *http.Request) {
 
 	go func(wg *sync.WaitGroup, managerID uint32) {
 		defer wg.Done()
+		log.Println("Manager API call")
 		manager, managerErr = h.ManagersRepo.GetManagerByManagerID(managerID)
 	}(&wg, managerID)
 
 	go func(wg *sync.WaitGroup, managerID uint32) {
 		defer wg.Done()
+		log.Println("ManagerPlayers API call")
 		playerIDs, playerIDsErr = h.ManagersRepo.GetManagerPlayers(managerID)
 	}(&wg, managerID)
 
 	wg.Wait()
 
-	if managerErr != nil || playerIDsErr != nil {
+	if managerErr != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("Error"))
+		w.Write([]byte("A" + managerErr.Error()))
+		return
+	}
+
+	if playerIDsErr != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("B" + playerIDsErr.Error()))
 		return
 	}
 
@@ -81,6 +94,7 @@ func (h *Handler) GetManagerPlayers(w http.ResponseWriter, r *http.Request) {
 				Player: player,
 				Err:    err,
 			}
+			log.Println("Player API CALL: ", playerID)
 			ch <- playerDTO
 		}(playerIDs.PlayerIDs[i])
 	}
@@ -99,7 +113,7 @@ func (h *Handler) GetManagerPlayers(w http.ResponseWriter, r *http.Request) {
 
 	if errsStr != "" {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("No Players for this Manager."))
+		w.Write([]byte(errsStr))
 		return
 	}
 

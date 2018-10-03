@@ -5,7 +5,7 @@ import (
 	"errors"
 	"log"
 
-	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-4/video-3/src/sessions-service/entities"
+	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3/sessions-service/entities"
 	"github.com/mediocregopher/radix.v2/pool"
 )
 
@@ -16,7 +16,7 @@ type RedisSessionsRepository struct {
 }
 
 func NewRedisSessionsRepository() *RedisSessionsRepository {
-	pool, err := pool.New("tcp", "localhost:6379", 100)
+	pool, err := pool.New("tcp", "sessions-redis:6379", 100)
 	if err != nil {
 		log.Fatal(err)
 	}

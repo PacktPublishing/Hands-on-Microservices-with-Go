@@ -28,8 +28,8 @@ func main() {
 
 	r.HandleFunc("/user/videos", handlers.VerifyJWT(h.AddSessionData(h.GetAllUserVideos)))
 
-	certPath := "server.pem"
-	keyPath := "server.key"
+	certPath := "/app/server.pem"
+	keyPath := "/app/server.key"
 
 	err := http.ListenAndServeTLS(":8443", certPath, keyPath, r)
 	if err != nil {
