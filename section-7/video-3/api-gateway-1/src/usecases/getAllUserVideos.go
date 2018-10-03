@@ -2,6 +2,7 @@ package usecases
 
 import (
 	"errors"
+	"log"
 	"sort"
 	"sync"
 
@@ -81,6 +82,7 @@ func (uc GetAllUserVideos) GetAllVideosFromUser(userID uint32) (*AllUserVideosDT
 		return nil, ErrNoVideosForUser
 	}
 
+	log.Println(":D")
 	for i := 0; i < count; i++ {
 		go func(playerID uint32) {
 			player, err := uc.WTARepo.GetPlayerByPlayerID(playerID)

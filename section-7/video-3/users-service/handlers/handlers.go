@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-4/video-3/src/users-service/repositories"
+	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3/users-service/repositories"
 	"github.com/gorilla/mux"
 )
 

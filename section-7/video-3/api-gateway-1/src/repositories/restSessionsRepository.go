@@ -48,7 +48,7 @@ func (repo *RestSessionsRepository) SetSession(key string, session *entities.Ses
 	}
 
 	buf := bytes.NewBuffer(jsonSession)
-	url := "http://127.0.0.1:8001/session/" + url.PathEscape(key)
+	url := "http://sessions-service:8001/session/" + url.PathEscape(key)
 	fmt.Println(url)
 	req, err := http.NewRequest(http.MethodPut, url, buf)
 	if err != nil {

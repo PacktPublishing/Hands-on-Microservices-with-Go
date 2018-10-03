@@ -15,7 +15,7 @@ type MariaDBVideosRepository struct {
 func NewMariaDBVideosRepository() *MariaDBVideosRepository {
 
 	// Create the database handle, confirm driver is present
-	db, err := sql.Open("mysql", "root:root-password@tcp(wta-mariadb:3306)/users?parseTime=true")
+	db, err := sql.Open("mysql", "root:root-password@tcp(videos-mariadb:3306)/videos?parseTime=true")
 	if err != nil {
 		log.Fatal(err)
 	}

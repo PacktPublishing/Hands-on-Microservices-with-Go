@@ -14,17 +14,21 @@ import (
 type RestWTARepository struct{}
 
 var Err404OnMatchRequest = errors.New("404 Not Found on Match Request")
+var Err500OnMatchRequest = errors.New("500 on Match Request")
 
 func (repo *RestWTARepository) GetMatchByMatchID(matchID uint32) (*entities.Match, error) {
 
 	matchIDStr := strconv.Itoa(int(matchID))
 
-	resp, err := http.Get("http://wta-service:8000/match/" + url.PathEscape(matchIDStr))
+	resp, err := http.Get("http://wta-service:8080/match/" + url.PathEscape(matchIDStr))
 	if err != nil {
 		return nil, err
 	}
 	if resp.StatusCode == 404 {
 		return nil, Err404OnMatchRequest
+	}
+	if resp.StatusCode == 500 {
+		return nil, Err500OnMatchRequest
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
@@ -47,7 +51,7 @@ func (repo *RestWTARepository) GetPlayerByPlayerID(playerID uint32) (*entities.P
 
 	playerIDStr := strconv.Itoa(int(playerID))
 
-	resp, err := http.Get("http://wta-service:8000/match/" + url.PathEscape(playerIDStr))
+	resp, err := http.Get("http://wta-service:8080/player/" + url.PathEscape(playerIDStr))
 	if err != nil {
 		return nil, err
 	}

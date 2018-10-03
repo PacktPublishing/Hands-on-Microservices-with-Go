@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -25,6 +26,7 @@ func (handler *Handlers) GetAllUserVideos(w http.ResponseWriter, r *http.Request
 	}
 	userID, err := strconv.Atoi(userIDstr)
 	if err != nil {
+		log.Println(err.Error())
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprint(w, err)
 		return
@@ -32,6 +34,7 @@ func (handler *Handlers) GetAllUserVideos(w http.ResponseWriter, r *http.Request
 
 	videos, err := handler.GetAllUserVideosUsecase.GetAllUserVideos(uint32(userID))
 	if err != nil {
+		log.Println(err.Error())
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprint(w, err)
 		return
@@ -39,6 +42,7 @@ func (handler *Handlers) GetAllUserVideos(w http.ResponseWriter, r *http.Request
 
 	videosJSON, err := json.Marshal(videos)
 	if err != nil {
+		log.Println(err.Error())
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprint(w, err)
 		return

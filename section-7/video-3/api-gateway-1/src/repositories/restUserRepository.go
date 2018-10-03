@@ -14,15 +14,19 @@ import (
 type RestUsersRepository struct{}
 
 var Err404OnUserRequest = errors.New("404 Not Found on User Request")
+var Err500OnUserRequest = errors.New("500 on User Request")
 
 func (repo *RestUsersRepository) GetUserByUsername(username string) (*entities.User, error) {
 
-	resp, err := http.Get("http://127.0.0.1:8000/user/" + url.PathEscape(username))
+	resp, err := http.Get("http://users-service:8080/user/by/username/" + url.PathEscape(username))
 	if err != nil {
 		return nil, err
 	}
 	if resp.StatusCode == 404 {
 		return nil, Err404OnUserRequest
+	}
+	if resp.StatusCode == 500 {
+		return nil, Err500OnUserRequest
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
@@ -43,7 +47,7 @@ func (repo *RestUsersRepository) GetUserByUserID(userID uint32) (*entities.User,
 
 	userIDStr := strconv.Itoa(int(userID))
 
-	resp, err := http.Get("http://users-service:8080/user/" + url.PathEscape(userIDStr))
+	resp, err := http.Get("http://users-service:8080/user/by/id/" + url.PathEscape(userIDStr))
 	if err != nil {
 		return nil, err
 	}
