@@ -112,7 +112,7 @@ services:
     networks:
       - s3v7-network
     volumes:
-      - s3v6pgdata:/var/lib/postgresql/data
+      - postgres-wta:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD:packt
       - POSTGRES_USER:packt
@@ -128,5 +128,5 @@ volumes:
     external: true
   mariadb-videos:
     external: true
-  s3v6pgdata:
+  postgres-wta:
     external: true

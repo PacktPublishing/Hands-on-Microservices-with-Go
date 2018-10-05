@@ -10,10 +10,6 @@ GOOS="linux"
 #SET PATH TO THIS FOLDER
 PATH_TO_VIDEO_FOLDER=$YOUR_HOME"/go/src/github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3/"
 
-#AAA=$YOUR_HOME"/Downloads"
-#LALA="-ls"
-#ls $LALA $AAA
-
 #STOP DOCKER COMPOSE IF IT's RUNNING
 sudo docker-compose down
 
