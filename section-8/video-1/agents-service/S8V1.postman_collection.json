@@ -1,0 +1,51 @@
+{
+	"id": "1e8cc5ec-1f8a-4216-87c5-6962f94b1439",
+	"name": "S8V1",
+	"description": "",
+	"auth": null,
+	"events": null,
+	"variables": [],
+	"order": [
+		"0e8affd2-1098-4dda-8d80-0e6337893f36",
+		"87494dbc-49f7-4572-9389-2da084bfc609"
+	],
+	"folders_order": [],
+	"folders": [],
+	"requests": [
+		{
+			"id": "0e8affd2-1098-4dda-8d80-0e6337893f36",
+			"name": "Get Agent",
+			"url": "http://127.0.0.1:8080/agent/10",
+			"description": "",
+			"data": null,
+			"dataMode": "params",
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "87494dbc-49f7-4572-9389-2da084bfc609",
+			"name": "Insert Agent Player",
+			"url": "http://127.0.0.1:8080/agent-player",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\"agent_id\":10, \"player_id\":20100}",
+			"headers": "",
+			"pathVariables": {}
+		}
+	]
+}

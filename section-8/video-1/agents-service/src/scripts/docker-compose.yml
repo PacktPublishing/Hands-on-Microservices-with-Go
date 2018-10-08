@@ -1,0 +1,29 @@
+version: '3'
+services:
+  agents-mariadb:
+    image: "mariadb"
+    container_name: "agents-mariadb"
+    networks:
+      - s8v1-network
+    volumes:
+      - mariadb-agents:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD:root-password
+
+  agents-service:
+    build: ../../
+    image: "agents-service"
+    container_name: "agents-service"
+    ports:
+      - "8080:8080"
+    networks:
+      - s8v1-network
+    depends_on:
+      - agents-mariadb
+
+networks:
+  s8v1-network:
+
+volumes:
+  mariadb-agents:
+    external: true
