@@ -16,11 +16,11 @@ func main() {
 	r := mux.NewRouter()
 
 	h := &handlers.Handler{
-		ManagersRepo: repositories.RestManagersRepository{},
-		WTARepo:      repositories.RestWTARepository{},
+		AgentsRepo: repositories.RestAgentsRepository{},
+		WTARepo:    repositories.RestWTARepository{},
 	}
 
-	r.HandleFunc("/manager/players/{id}", h.GetManagerPlayers)
+	r.HandleFunc("/agent/players/{id}", h.GetAgentPlayers)
 
 	srv := &http.Server{
 		Handler: r,

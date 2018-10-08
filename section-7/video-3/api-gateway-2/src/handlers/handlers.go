@@ -16,51 +16,51 @@ import (
 type ctxKey int
 
 const (
-	ManagerID ctxKey = iota
+	AgentID ctxKey = iota
 )
 
 type Handler struct {
-	ManagersRepo repositories.RestManagersRepository
-	WTARepo      repositories.RestWTARepository
+	AgentsRepo repositories.RestAgentsRepository
+	WTARepo    repositories.RestWTARepository
 }
 
-type ManagerPlayersDTO struct {
-	Manager *entities.Manager
+type AgentPlayersDTO struct {
+	Agent   *entities.Agent
 	Players []*entities.Player
 }
 
-func (h *Handler) GetManagerPlayers(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) GetAgentPlayers(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 
-	managerIDInt, err := strconv.Atoi(vars["id"])
-	managerID := uint32(managerIDInt)
+	agentIDInt, err := strconv.Atoi(vars["id"])
+	agentID := uint32(agentIDInt)
 
-	var manager *entities.Manager
-	var managerErr error
-	var playerIDs *repositories.ManagerPlayerIDsDTO
+	var agent *entities.Agent
+	var agentErr error
+	var playerIDs *repositories.AgentPlayerIDsDTO
 	var playerIDsErr error
 
 	var wg sync.WaitGroup
 	wg.Add(2)
 
-	go func(wg *sync.WaitGroup, managerID uint32) {
+	go func(wg *sync.WaitGroup, agentID uint32) {
 		defer wg.Done()
-		log.Println("Manager API call")
-		manager, managerErr = h.ManagersRepo.GetManagerByManagerID(managerID)
-	}(&wg, managerID)
+		log.Println("Agent API call")
+		agent, agentErr = h.AgentsRepo.GetAgentByAgentID(agentID)
+	}(&wg, agentID)
 
-	go func(wg *sync.WaitGroup, managerID uint32) {
+	go func(wg *sync.WaitGroup, agentID uint32) {
 		defer wg.Done()
-		log.Println("ManagerPlayers API call")
-		playerIDs, playerIDsErr = h.ManagersRepo.GetManagerPlayers(managerID)
-	}(&wg, managerID)
+		log.Println("AgentPlayers API call")
+		playerIDs, playerIDsErr = h.AgentsRepo.GetAgentPlayers(agentID)
+	}(&wg, agentID)
 
 	wg.Wait()
 
-	if managerErr != nil {
+	if agentErr != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("A" + managerErr.Error()))
+		w.Write([]byte("A" + agentErr.Error()))
 		return
 	}
 
@@ -82,7 +82,7 @@ func (h *Handler) GetManagerPlayers(w http.ResponseWriter, r *http.Request) {
 
 	if count == 0 {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("No Players for this Manager."))
+		w.Write([]byte("No Players for this Agent."))
 		return
 	}
 
@@ -117,8 +117,8 @@ func (h *Handler) GetManagerPlayers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res := &ManagerPlayersDTO{
-		Manager: manager,
+	res := &AgentPlayersDTO{
+		Agent: agent,
 	}
 
 	for i := 0; i < count; i++ {

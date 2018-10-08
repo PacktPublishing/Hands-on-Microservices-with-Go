@@ -21,7 +21,7 @@ sudo docker-compose down
 cd $PATH_TO_VIDEO_FOLDER"users-service/"
 go build -a -o main main.go
 #MANAGERS
-cd $PATH_TO_VIDEO_FOLDER"managers-service/src/"
+cd $PATH_TO_VIDEO_FOLDER"agents-service/src/"
 go build -a -o ../main main.go
 #VIDEOS
 cd $PATH_TO_VIDEO_FOLDER"videos-service/src/"

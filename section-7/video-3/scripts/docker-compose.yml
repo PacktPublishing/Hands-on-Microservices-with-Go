@@ -22,7 +22,7 @@ services:
     networks:
       - s3v7-network
     depends_on:
-      - managers-service
+      - agents-service
       - wta-service
 
   users-service:
@@ -44,22 +44,22 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD:root-password
      
-  managers-service:
-    build: ../managers-service/
-    image: "managers-service"
-    container_name: "managers-service"
+  agents-service:
+    build: ../agents-service/
+    image: "agents-service"
+    container_name: "agents-service"
     networks:
       - s3v7-network
     depends_on:
-      - managers-mariadb
+      - agents-mariadb
 
-  managers-mariadb:
+  agents-mariadb:
     image: "mariadb"
-    container_name: "managers-mariadb"
+    container_name: "agents-mariadb"
     networks:
       - s3v7-network
     volumes:
-      - mariadb-managers:/var/lib/mysql
+      - mariadb-agents:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD:root-password
 
@@ -124,7 +124,7 @@ networks:
 volumes:
   usersmariadb:
     external: true
-  mariadb-managers:
+  mariadb-agents:
     external: true
   mariadb-videos:
     external: true

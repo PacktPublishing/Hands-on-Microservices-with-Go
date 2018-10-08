@@ -1,0 +1,35 @@
+version: '3'
+services:
+  users-api:
+    build: .
+    container_name: "users-api"
+    ports:
+      - "8000:8000"
+    networks:
+      - user-network
+    depends_on:
+      - users-cache-redis
+      - users-mariadb
+
+  users-cache-redis:
+    image: "redis"
+    container_name: "users-cache-redis"
+    networks:
+      - user-network
+
+  users-mariadb:
+    image: "mariadb"
+    container_name: "users-mariadb"
+    networks:
+      - user-network
+    volumes:
+      - usersmariadb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD:root-password
+
+networks:
+  user-network:
+
+volumes:
+  usersmariadb:
+    external: true

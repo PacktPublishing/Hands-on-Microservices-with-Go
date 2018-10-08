@@ -7,10 +7,10 @@ YOUR_HOME="/home/emiliano"
 #SET PATH TO THIS FOLDER
 PATH_TO_VIDEO_FOLDER=$YOUR_HOME"/go/src/github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3"
 
-sudo docker volume rm mariadb-managers
-sudo docker volume create mariadb-managers
-sudo docker run -it --rm -v mariadb-managers:/volume -v $PATH_TO_VIDEO_FOLDER/data:/backup alpine \
-    sh -c "rm -rf /volume/* /volume/..?* /volume/.[!.]* ; tar -C /volume/ -xjf /backup/mariadb-managers.tar.bz2"
+sudo docker volume rm mariadb-agents
+sudo docker volume create mariadb-agents
+sudo docker run -it --rm -v mariadb-agents:/volume -v $PATH_TO_VIDEO_FOLDER/data:/backup alpine \
+    sh -c "rm -rf /volume/* /volume/..?* /volume/.[!.]* ; tar -C /volume/ -xjf /backup/mariadb-agents.tar.bz2"
 
 sudo docker volume rm mariadb-videos
 sudo docker volume create mariadb-videos

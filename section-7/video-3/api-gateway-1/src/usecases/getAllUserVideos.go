@@ -2,7 +2,6 @@ package usecases
 
 import (
 	"errors"
-	"log"
 	"sort"
 	"sync"
 
@@ -82,18 +81,17 @@ func (uc GetAllUserVideos) GetAllVideosFromUser(userID uint32) (*AllUserVideosDT
 		return nil, ErrNoVideosForUser
 	}
 
-	log.Println(":D")
 	for i := 0; i < count; i++ {
-		go func(playerID uint32) {
+		go func(playerID uint32, index int) {
 			player, err := uc.WTARepo.GetPlayerByPlayerID(playerID)
 
 			res := playerWithErrorDTO{
 				Player: player,
 				Err:    err,
-				Index:  i,
+				Index:  index,
 			}
 			ch <- &res
-		}(videos[i].Player1ID)
+		}(videos[i].Player1ID, i)
 	}
 
 	for i := 0; i < count; i++ {

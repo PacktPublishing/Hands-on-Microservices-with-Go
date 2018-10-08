@@ -21,7 +21,7 @@ type Route struct {
 	handler http.Handler
 	// List of matchers.
 	matchers []matcher
-	// Manager for the variables from host and path.
+	// Agent for the variables from host and path.
 	regexp *routeRegexpGroup
 	// If true, when the path pattern is "/path/", accessing "/path" will
 	// redirect to the former and vice versa.

@@ -11,7 +11,7 @@ type Player struct {
 	CountryCode   string    `json:"country_code"`
 }
 
-type Manager struct {
+type Agent struct {
 	ID      uint32 `json:"id"`
 	Name    string `json:"name"`
 	Account uint32 `json:"account"`

@@ -6,11 +6,11 @@ sudo docker rmi "users-service"
 sudo docker stop users-mariabd
 sudo docker rm users-mariadb
 #MANAGERS
-sudo docker stop managers-service
-sudo docker rm managers-service
-sudo docker rmi "managers-service"
-sudo docker stop managers-mariabd
-sudo docker rm managers-mariadb
+sudo docker stop agents-service
+sudo docker rm agents-service
+sudo docker rmi "agents-service"
+sudo docker stop agents-mariabd
+sudo docker rm agents-mariadb
 #SESSIONS
 sudo docker stop sessions-service
 sudo docker rm sessions-service

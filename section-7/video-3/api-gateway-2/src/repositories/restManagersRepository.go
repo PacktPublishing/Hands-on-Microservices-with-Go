@@ -11,25 +11,25 @@ import (
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-7/video-3/api-gateway-2/src/entities"
 )
 
-type RestManagersRepository struct{}
+type RestAgentsRepository struct{}
 
-var Err404OnManagerRequest = errors.New("404 Not Found on Manager Request")
+var Err404OnAgentRequest = errors.New("404 Not Found on Agent Request")
 
-type ManagerPlayerIDsDTO struct {
+type AgentPlayerIDsDTO struct {
 	PlayerIDs []uint32 `json:"PlayerIDs,omitempty"`
 	Err       string   `json:"error,omitempty"`
 }
 
-func (repo *RestManagersRepository) GetManagerByManagerID(managerID uint32) (*entities.Manager, error) {
+func (repo *RestAgentsRepository) GetAgentByAgentID(agentID uint32) (*entities.Agent, error) {
 
-	managerIDStr := strconv.Itoa(int(managerID))
-	url := "http://managers-service:8080/manager/" + url.PathEscape(managerIDStr)
+	agentIDStr := strconv.Itoa(int(agentID))
+	url := "http://agents-service:8080/agent/" + url.PathEscape(agentIDStr)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
 	if resp.StatusCode == 404 {
-		return nil, Err404OnManagerRequest
+		return nil, Err404OnAgentRequest
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
@@ -37,25 +37,25 @@ func (repo *RestManagersRepository) GetManagerByManagerID(managerID uint32) (*en
 		return nil, err
 	}
 
-	var manager entities.Manager
-	err = json.Unmarshal(body, &manager)
+	var agent entities.Agent
+	err = json.Unmarshal(body, &agent)
 	if err != nil {
 		return nil, err
 	}
 
-	return &manager, nil
+	return &agent, nil
 }
 
-func (repo *RestManagersRepository) GetManagerPlayers(managerID uint32) (*ManagerPlayerIDsDTO, error) {
+func (repo *RestAgentsRepository) GetAgentPlayers(agentID uint32) (*AgentPlayerIDsDTO, error) {
 
-	managerIDStr := strconv.Itoa(int(managerID))
+	agentIDStr := strconv.Itoa(int(agentID))
 
-	resp, err := http.Get("http://managers-service:8080/manager/players/" + url.PathEscape(managerIDStr))
+	resp, err := http.Get("http://agents-service:8080/agent/players/" + url.PathEscape(agentIDStr))
 	if err != nil {
 		return nil, err
 	}
 	if resp.StatusCode == 404 {
-		return nil, Err404OnManagerRequest
+		return nil, Err404OnAgentRequest
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
@@ -63,7 +63,7 @@ func (repo *RestManagersRepository) GetManagerPlayers(managerID uint32) (*Manage
 		return nil, err
 	}
 
-	playerIDs := ManagerPlayerIDsDTO{}
+	playerIDs := AgentPlayerIDsDTO{}
 	err = json.Unmarshal(body, &playerIDs)
 	if err != nil {
 		return nil, err
