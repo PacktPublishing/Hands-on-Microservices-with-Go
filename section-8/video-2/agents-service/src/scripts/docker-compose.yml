@@ -16,6 +16,7 @@ services:
     container_name: "agents-service"
     ports:
       - "8080:8080"
+      - "50051:50051"
     networks:
       - s8v2-network
     depends_on:

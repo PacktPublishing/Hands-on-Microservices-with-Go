@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package pb;
+
+service Agents {
+  rpc InsertAgentPlayer (InsertAgentPlayerRequest) returns (InsertAgentPlayerReply) {}
+  rpc GetAgentByID (GetAgentByIDRequest) returns (GetAgentByIDReply) {}
+}
+
+message InsertAgentPlayerRequest {
+  uint32 agentID = 1;
+  uint32 playerID = 2;
+}
+
+message InsertAgentPlayerReply {
+  bool success = 1;
+}
+
+message GetAgentByIDRequest {
+  uint32 agentID = 1;
+}
+
+message GetAgentByIDReply {
+  uint32 agentID = 1;
+  uint32 account = 2;
+  string name = 3;
+}

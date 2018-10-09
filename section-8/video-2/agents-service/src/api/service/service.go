@@ -25,6 +25,3 @@ func (srv AgentsServiceImpl) GetAgentByID(agentID uint32) (*entities.Agent, erro
 	agent, err := srv.Repo.GetAgentByID(agentID)
 	return agent, err
 }
-
-// ServiceMiddleware is a chainable behavior modifier for AgentsService.
-type ServiceMiddleware func(AgentsService) AgentsServiceImpl

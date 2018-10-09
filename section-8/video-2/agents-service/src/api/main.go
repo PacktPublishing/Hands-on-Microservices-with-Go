@@ -3,19 +3,33 @@ package main
 import (
 	"fmt"
 	"log"
+	"net"
 	"net/http"
+	"os"
 	"time"
 
-	httptransport "github.com/go-kit/kit/transport/http"
-	"github.com/gorilla/mux"
+	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-8/video-2/agents-service/src/api/transports/grpc/pb"
 
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-8/video-2/agents-service/src/api/repositories"
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-8/video-2/agents-service/src/api/service"
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-8/video-2/agents-service/src/api/transports/endpoints"
+	grpcEncoding "github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-8/video-2/agents-service/src/api/transports/grpc/encoding"
+	httpEncoding "github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-8/video-2/agents-service/src/api/transports/http/encoding"
+	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-8/video-2/agents-service/src/api/transports/middleware"
+	"google.golang.org/grpc"
+
+	gokitLog "github.com/go-kit/kit/log"
+
+	mygrpctransport "github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-8/video-2/agents-service/src/api/transports/grpc/transport"
+	grpctransport "github.com/go-kit/kit/transport/grpc"
+	httptransport "github.com/go-kit/kit/transport/http"
+
+	"github.com/gorilla/mux"
 )
 
 func main() {
-	r := mux.NewRouter()
+
+	logger := gokitLog.NewLogfmtLogger(os.Stderr)
 
 	repo := repositories.NewMariaDBAgentsRepository()
 	defer repo.Close()
@@ -24,19 +38,52 @@ func main() {
 	svc.Repo = repo
 
 	insertAgentPlayerEndpoint := endpoints.MakeInsertAgentPlayerEndpoint(svc)
+	insertAgentPlayerEndpoint = middleware.LoggingMiddleware(gokitLog.With(logger, "method", "insertAgentPlayer"))(insertAgentPlayerEndpoint)
+
+	getAgentByIDEndpoint := endpoints.MakeGetAgentByIDEndpoint(svc)
+	getAgentByIDEndpoint = middleware.LoggingMiddleware(gokitLog.With(logger, "method", "getAgent"))(getAgentByIDEndpoint)
+
+	//GRPC
+
+	gsrv := &mygrpctransport.GrpcServer{
+		InsertAgentPlayerHandler: grpctransport.NewServer(
+			insertAgentPlayerEndpoint,
+			grpcEncoding.DecodeInsertAgentPlayerRequest,
+			grpcEncoding.EncodeInsertAgentPlayerResponse,
+		),
+		GetAgentByIDHandler: grpctransport.NewServer(
+			getAgentByIDEndpoint,
+			grpcEncoding.DecodeGetAgentByIDRequest,
+			grpcEncoding.EncodeGetAgentByIDResponse,
+		),
+	}
+
+	// The gRPC listener mounts the Go kit gRPC server we created.
+	grpcListener, err := net.Listen("tcp", ":50051")
+	if err != nil {
+		logger.Log("transport", "gRPC", "during", "Listen", "err", err)
+		os.Exit(1)
+	}
+	defer grpcListener.Close()
+
+	logger.Log("transport", "gRPC", "addr", "50051")
+	s := grpc.NewServer()
+	pb.RegisterAgentsServer(s, gsrv)
+	log.Fatal(s.Serve(grpcListener))
+
+	//HTTP
+	r := mux.NewRouter()
 
 	r.Methods("POST").Path("/agent-player").Handler(httptransport.NewServer(
 		insertAgentPlayerEndpoint,
-		endpoints.DecodeInsertAgentPlayerRequest,
-		endpoints.EncodeInsertAgentPlayerResponse,
+		httpEncoding.DecodeInsertAgentPlayerRequest,
+		httpEncoding.EncodeInsertAgentPlayerResponse,
 	))
-
-	getAgentByIDEndpoint := endpoints.MakeGetAgentByIDEndpoint(svc)
 
 	r.Methods("GET").Path("/agent/{id}").Handler(httptransport.NewServer(
 		getAgentByIDEndpoint,
-		endpoints.DecodeGetAgentByIDRequest,
-		endpoints.EncodeGetAgentByIDResponse,
+		httpEncoding.DecodeGetAgentByIDRequest,
+		httpEncoding.EncodeGetAgentByIDResponse,
 	))
 
 	srv := &http.Server{

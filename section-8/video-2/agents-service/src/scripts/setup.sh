@@ -19,6 +19,7 @@ sudo docker-compose down
 #GENERATE RUNNABLES
 #AGENTS
 cd $PATH_TO_VIDEO_FOLDER"agents-service/src/api/"
+rm ../../main
 go build -a -o ../../main main.go
 
 cd $PATH_TO_VIDEO_FOLDER"agents-service/src/scripts"
