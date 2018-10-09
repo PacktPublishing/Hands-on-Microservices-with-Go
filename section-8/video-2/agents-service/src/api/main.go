@@ -37,8 +37,10 @@ func main() {
 	svc := service.AgentsServiceImpl{}
 	svc.Repo = repo
 
+	loggingMiddleware := middleware.LoggingMiddleware(gokitLog.With(logger, "method", "insertAgentPlayer"))
+
 	insertAgentPlayerEndpoint := endpoints.MakeInsertAgentPlayerEndpoint(svc)
-	insertAgentPlayerEndpoint = middleware.LoggingMiddleware(gokitLog.With(logger, "method", "insertAgentPlayer"))(insertAgentPlayerEndpoint)
+	insertAgentPlayerEndpoint = loggingMiddleware(insertAgentPlayerEndpoint)
 
 	getAgentByIDEndpoint := endpoints.MakeGetAgentByIDEndpoint(svc)
 	getAgentByIDEndpoint = middleware.LoggingMiddleware(gokitLog.With(logger, "method", "getAgent"))(getAgentByIDEndpoint)
