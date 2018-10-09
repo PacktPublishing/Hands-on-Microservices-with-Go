@@ -69,7 +69,9 @@ func main() {
 	logger.Log("transport", "gRPC", "addr", "50051")
 	s := grpc.NewServer()
 	pb.RegisterAgentsServer(s, gsrv)
-	log.Fatal(s.Serve(grpcListener))
+	go func() {
+		log.Fatal(s.Serve(grpcListener))
+	}()
 
 	//HTTP
 	r := mux.NewRouter()
