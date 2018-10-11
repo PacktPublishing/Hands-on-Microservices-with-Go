@@ -7,16 +7,16 @@ import (
 	"net/http"
 )
 
-//Run with go run server/main.go -failProb 89
+//Run with go run server/main.go -failProb 50
 var failProb uint16
 
 func main() {
-	fp := flag.Int("failProb", 0, "Failures per 100 Requests.")
+	fp := flag.Int("failProb", 0, "Probability of Failure per 100 Requests.")
 	flag.Parse()
-	failProb = uint16(*fp)
+	failProb = uint16(*fp) - 1
 
 	http.HandleFunc("/", handler)
-	log.Println("failProb:", failProb)
+	log.Println("failProb:", (failProb + 1))
 	log.Println("Starting Server on Port 9000.")
 	http.ListenAndServe("localhost:9000", nil)
 }

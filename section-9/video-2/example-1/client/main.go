@@ -31,7 +31,7 @@ func main() {
 	client := &http.Client{Transport: rt}
 
 	fmt.Println("Starting at: ", time.Now())
-	limiter := rate.NewLimiter(10, 2)
+	limiter := rate.NewLimiter(10, 5)
 	//Empty Context
 	ctx := context.Background()
 

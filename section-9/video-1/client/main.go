@@ -28,7 +28,7 @@ func main() {
 	}
 
 	client := &http.Client{Transport: rt}
-	cb := circuit.NewRateBreaker(0.90, 100)
+	cb := circuit.NewRateBreaker(0.50, 100)
 
 	wg := sync.WaitGroup{}
 	wg.Add(5000)

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 	"net/http"
@@ -29,13 +30,14 @@ func main() {
 
 	client := &http.Client{Transport: rt}
 
-	limiter := rate.NewLimiter(50, 10)
+	fmt.Println("Starting at: ", time.Now())
+	limiter := rate.NewLimiter(10, 5)
 	//Empty Context
 	ctx := context.Background()
 
 	wg := sync.WaitGroup{}
-	wg.Add(300)
-	for i := 0; i < 300; i++ {
+	wg.Add(500)
+	for i := 0; i < 500; i++ {
 		go func(index int) {
 			limiter.Wait(ctx)
 			defer wg.Done()
@@ -43,6 +45,7 @@ func main() {
 		}(i)
 	}
 	wg.Wait()
+	fmt.Println("Finishing at: ", time.Now())
 }
 
 func doGet(client *http.Client, index int) {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"math/rand"
 	"net"
 	"net/http"
 	"sync"
@@ -26,9 +27,9 @@ func main() {
 
 	client := &http.Client{Transport: rt}
 	wg := sync.WaitGroup{}
-	wg.Add(300)
-	for i := 0; i < 300; i++ {
-		time.Sleep(time.Millisecond * 10)
+	wg.Add(1000)
+	for i := 0; i < 1000; i++ {
+		time.Sleep(time.Millisecond * (time.Duration(rand.Intn(10) + 5)))
 		go func(index int) {
 			defer wg.Done()
 			doGet(client, index)
