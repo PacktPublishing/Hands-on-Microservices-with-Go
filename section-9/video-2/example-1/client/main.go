@@ -54,5 +54,5 @@ func doGet(client *http.Client, index int) {
 	if err != nil || res.StatusCode != http.StatusOK {
 		log.Println("Index: ", index, " - Request Error")
 	}
-	//	log.Println("Index: ", index, " - Request Success")
+	//log.Println("Index: ", index, " - Request Success")
 }
