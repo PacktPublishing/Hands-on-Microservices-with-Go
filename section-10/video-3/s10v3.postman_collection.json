@@ -1,0 +1,137 @@
+{
+	"id": "e324bc5f-3b9a-461b-a831-d3b27d98283c",
+	"name": "s3v7",
+	"description": "",
+	"auth": null,
+	"events": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "35d20863-c3e4-4bb4-833c-8eab75242e40",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b74c83b7-1330-4e06-8570-b50afc2e015f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variables": [],
+	"order": [
+		"8b9a0407-a280-42d4-ae47-bdf7abee15f8",
+		"22d88d17-d226-41cb-9778-3ff47c0ac58c",
+		"4604d246-628a-42d7-82e9-759f20f59e68"
+	],
+	"folders_order": [],
+	"folders": [],
+	"requests": [
+		{
+			"id": "22d88d17-d226-41cb-9778-3ff47c0ac58c",
+			"name": "API Gateway 2 - Agent Players",
+			"url": "http://127.0.0.1:8080/agent/players/100",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"rawModeData": "{\"agent_id\":mmmmm80, \"player_id\":10000}",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "4604d246-628a-42d7-82e9-759f20f59e68",
+			"name": "API Gateway 1 - User Videos",
+			"url": "https://localhost:8443/user/videos",
+			"description": "",
+			"data": [
+				{
+					"key": "username",
+					"value": "veronica.muller",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "sacachispas-futbol-club",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"enabled": false
+				},
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJIZWxsbyI6IldvcmxkIiwiZXhwIjoxNTQ2NTI5OTM3LCJpYXQiOjE1Mzg1ODExMzcsImlzcyI6InBhY2t0IiwianRpIjoiT3cwOFJKbUd5OGtaVG1acjRyeTBxemxMWEJ0SHR4akd1QjBrWVR4OTA0OTNmczhYZXAwR1poMHJEVDBBWHNjREFXbEJzYldoM1M3Y0JBbGJtWmlNR1FMNzBVN2JWSG5HbWFMeDJ5V21jMXBaRWZ4Y0VEZ2hKQTVDYTEwVW1lNjNIOFJSRHdKNHlsRW5EaEhVZVFZeGthQU15Ymgya3lod2h0RmRRVGFRV29VPSIsInN1YiI6InZlcm9uaWNhLm11bGxlciJ9.lr8FewOV1N_gFPZGBQw8D6z5_WMs1RY5QP6Ff1UIqvSg4_v89_uOLgKaarZi95xjkhLN2So_nPOSRQ44UicCag",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "//Content-Type: application/x-www-form-urlencoded\nAuthorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJIZWxsbyI6IldvcmxkIiwiZXhwIjoxNTQ2NTI5OTM3LCJpYXQiOjE1Mzg1ODExMzcsImlzcyI6InBhY2t0IiwianRpIjoiT3cwOFJKbUd5OGtaVG1acjRyeTBxemxMWEJ0SHR4akd1QjBrWVR4OTA0OTNmczhYZXAwR1poMHJEVDBBWHNjREFXbEJzYldoM1M3Y0JBbGJtWmlNR1FMNzBVN2JWSG5HbWFMeDJ5V21jMXBaRWZ4Y0VEZ2hKQTVDYTEwVW1lNjNIOFJSRHdKNHlsRW5EaEhVZVFZeGthQU15Ymgya3lod2h0RmRRVGFRV29VPSIsInN1YiI6InZlcm9uaWNhLm11bGxlciJ9.lr8FewOV1N_gFPZGBQw8D6z5_WMs1RY5QP6Ff1UIqvSg4_v89_uOLgKaarZi95xjkhLN2So_nPOSRQ44UicCag\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "8b9a0407-a280-42d4-ae47-bdf7abee15f8",
+			"name": "API Gateway 1- Authorize",
+			"url": "https://localhost:8443/authorize",
+			"description": "",
+			"data": [
+				{
+					"key": "username",
+					"value": "veronica.muller",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "sacachispas-futbol-club",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"pathVariables": {}
+		}
+	]
+}
