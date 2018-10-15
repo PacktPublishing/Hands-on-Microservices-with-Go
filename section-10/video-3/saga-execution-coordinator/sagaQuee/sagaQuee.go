@@ -14,7 +14,7 @@ import (
 )
 
 type QueeMsg struct {
-	State sagaStateMachine.SagaState
+	State sagaStateMachine.SagaState `json:"state"`
 	*repositories.BuyVideoSagaDTO
 }
 
@@ -45,23 +45,27 @@ func (sq *SagaQuee) StartQueeProcessing() {
 		var msg *sarama.ConsumerMessage
 		msg = <-sq.Consumer.Messages()
 
-		log.Println("Msg Offset: ", msg.Offset, "Msg.Timestamp: ", msg.Timestamp)
-
-		var consumedQueeMsg *QueeMsg
-		err := json.Unmarshal(msg.Value, consumedQueeMsg)
+		var consumedQueeMsg QueeMsg
+		err := json.Unmarshal(msg.Value, &consumedQueeMsg)
 		if err != nil {
-			log.Println("Error Unmarshalling msg.")
+			log.Println("Error Unmarshalling msg: ", err.Error())
 			return
+		}
+		log.Println("Msg Offset: ", msg.Offset, "Msg.Timestamp: ", msg.Timestamp, "State: ", sagaStateMachine.SagaStateToString(consumedQueeMsg.State))
+
+		if consumedQueeMsg.State == sagaStateMachine.SAGA_END || consumedQueeMsg.State == sagaStateMachine.SAGA_ROLLBACK_END || consumedQueeMsg.State == sagaStateMachine.SAGA_UNHANDLED {
+			continue
 		}
 
 		nextState := sq.Ssm.ProcessSagaStateAndDecideNextState(consumedQueeMsg.State, consumedQueeMsg.BuyVideoSagaDTO)
 
-		saramaMsg, err := sq.encodeProducedQueeMsg(nextState, consumedQueeMsg.BuyVideoSagaDTO)
+		saramaMsg, err := sq.encodeSamaraMsg(nextState, consumedQueeMsg.BuyVideoSagaDTO)
 		if err != nil {
 			log.Println(err.Error())
 			return
 		}
 
+		log.Println(saramaMsg.Value)
 		sq.ProducerInputChannel <- saramaMsg
 
 		if nextState == sagaStateMachine.SAGA_END {
@@ -77,7 +81,7 @@ func (sq *SagaQuee) StartQueeProcessing() {
 }
 
 func (sq *SagaQuee) StartSaga(bvsDTO *repositories.BuyVideoSagaDTO) error {
-	saramaMsg, err := sq.encodeProducedQueeMsg(sagaStateMachine.SAGA_START, bvsDTO)
+	saramaMsg, err := sq.encodeSamaraMsg(sagaStateMachine.SAGA_START, bvsDTO)
 	if err != nil {
 		return err
 	}
@@ -90,7 +94,7 @@ func (sq *SagaQuee) CreateKey(userID uint32, videoID uint32) string {
 	return key
 }
 
-func (sq *SagaQuee) encodeProducedQueeMsg(state sagaStateMachine.SagaState, bvsDTO *repositories.BuyVideoSagaDTO) (*sarama.ProducerMessage, error) {
+func (sq *SagaQuee) encodeSamaraMsg(state sagaStateMachine.SagaState, bvsDTO *repositories.BuyVideoSagaDTO) (*sarama.ProducerMessage, error) {
 	producedQueeMsg := &QueeMsg{
 		State:           state,
 		BuyVideoSagaDTO: bvsDTO,

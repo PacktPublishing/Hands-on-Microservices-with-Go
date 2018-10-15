@@ -11,7 +11,7 @@ import (
 func main() {
 
 	config := consumergroup.NewConfig()
-	config.Offsets.Initial = sarama.OffsetNewest
+	config.Offsets.Initial = sarama.OffsetOldest
 	config.Offsets.ProcessingTimeout = 10 * time.Second
 
 	// Specify brokers address. This is default one

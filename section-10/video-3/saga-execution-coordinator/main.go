@@ -15,6 +15,7 @@ import (
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-10/video-3/saga-execution-coordinator/sagaStateMachine"
 
 	"github.com/Shopify/sarama"
+	"github.com/gorilla/mux"
 	"github.com/wvanbergen/kafka/consumergroup"
 )
 
@@ -37,9 +38,9 @@ func main() {
 	defer consumer.Close()
 
 	prodConfig := sarama.NewConfig()
-	prodConfig.Producer.RequiredAcks = sarama.WaitForAll
-	prodConfig.Producer.Retry.Max = 5
-	prodConfig.Producer.Return.Successes = true
+	prodConfig.Producer.RequiredAcks = sarama.WaitForLocal // Only wait for the leader to ack
+	//prodConfig.Producer.Compression = sarama.CompressionSnappy   // Compress messages
+	prodConfig.Producer.Flush.Frequency = 100 * time.Millisecond // Flush batches every 100ms
 
 	prodBrokers := []string{"localhost:9092"}
 	producer, err := sarama.NewAsyncProducer(prodBrokers, prodConfig)
@@ -70,9 +71,16 @@ func main() {
 	}()
 
 	log.Println("Starting Quee Processing.")
+
+	r := mux.NewRouter()
+	r.HandleFunc("/buy-video", createBuyVideoHandler(sagaQuee)).Methods("POST")
+	r.HandleFunc("/buy-video", createCheckSagaStateHandler(sagaQuee)).Methods("GET")
+
+	log.Println("Starting server on Port: 8080.")
+	log.Fatal(http.ListenAndServe(":8080", r))
 }
 
-func createStartHandler(sq *sagaQuee.SagaQuee) func(w http.ResponseWriter, r *http.Request) {
+func createBuyVideoHandler(sq *sagaQuee.SagaQuee) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		bvsDTO := &repositories.BuyVideoSagaDTO{}
 		body, err := ioutil.ReadAll(r.Body)
@@ -87,7 +95,7 @@ func createStartHandler(sq *sagaQuee.SagaQuee) func(w http.ResponseWriter, r *ht
 			w.Write([]byte(err.Error()))
 			return
 		}
-		sq.StartSaga(bvsDTO)
+		err = sq.StartSaga(bvsDTO)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
@@ -98,7 +106,7 @@ func createStartHandler(sq *sagaQuee.SagaQuee) func(w http.ResponseWriter, r *ht
 	}
 }
 
-func createCheckSagaStatueHandler(sq *sagaQuee.SagaQuee) func(w http.ResponseWriter, r *http.Request) {
+func createCheckSagaStateHandler(sq *sagaQuee.SagaQuee) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		bvsDTO := &repositories.BuyVideoSagaDTO{}
 		body, err := ioutil.ReadAll(r.Body)

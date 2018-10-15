@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"io/ioutil"
+	"log"
 	"net/http"
 
 	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-10/video-3/agents-service/repositories"
@@ -24,18 +25,21 @@ func (h *Handlers) UpdateAgentAccount(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err.Error())
 		w.Write([]byte(err.Error()))
 		return
 	}
 	err = json.Unmarshal(body, uua)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err.Error())
 		w.Write([]byte(err.Error()))
 		return
 	}
 	err = h.Repo.UpdateAgentAccount(uua.AgentID, uua.UserID, uua.VideoID, uua.Ammount)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
+		log.Println(err.Error())
 		w.Write([]byte(err.Error()))
 		return
 	}
@@ -47,23 +51,27 @@ func (h *Handlers) RollbackUpdateAgentAccount(w http.ResponseWriter, r *http.Req
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err.Error())
 		w.Write([]byte(err.Error()))
 		return
 	}
 	err = json.Unmarshal(body, uua)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err.Error())
 		w.Write([]byte(err.Error()))
 		return
 	}
 	err = h.Repo.RollbackUpdateAgentAccount(uua.AgentID, uua.UserID, uua.VideoID, uua.Ammount)
 	if err == repositories.ErrNothingToRollback {
 		w.WriteHeader(http.StatusConflict)
+		log.Println(err.Error())
 		w.Write([]byte(err.Error()))
 		return
 	}
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
+		log.Println(err.Error())
 		w.Write([]byte(err.Error()))
 		return
 	}

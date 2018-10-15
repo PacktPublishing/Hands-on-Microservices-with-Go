@@ -1,17 +1,5 @@
-version: '3'
+version: '3.4'
 services:
-  saga-execution-coordinator:
-    build: ../saga-execution-coordinator/
-    image: "saga-execution-coordinator"
-    container_name: "saga-execution-coordinator"
-    ports:
-      - "8080:8080"
-    depends_on:
-      - videos-service
-      - users-service
-      - agents-service
-      - kafka
-
   videos-service:
     build: ../videos-service/
     image: "videos-service"
@@ -19,7 +7,7 @@ services:
     ports:
       - "8081:8081"
     networks:
-      - s3v7-network
+      - s10v3-videos-network
     depends_on:
       - videos-mariadb
 
@@ -27,7 +15,7 @@ services:
     image: "mariadb"
     container_name: "videos-mariadb"
     networks:
-      - s3v7-network
+      - s10v3-videos-network
     volumes:
       - mariadb-videos:/var/lib/mysql
     environment:
@@ -50,7 +38,7 @@ services:
     networks:
       - s10v3-users-network
     volumes:
-      - usersmariadb:/var/lib/mysql
+      - mariadb-users:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD:root-password
      
@@ -75,18 +63,6 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD:root-password
 
-  kafka:
-    image: "spotify/kafka"
-    container_name: "kafka"
-    volumes:
-      - kafka-logs:/var/lib/kafka
-    ports:
-      - "2181:2181"
-      - "9092:9092"
-    environment:
-      - ADVERTISED_HOST:127.0.0.1
-      - ADVERTISED_PORT:9092
-
 networks:
   s10v3-videos-network:
   s10v3-users-network:
@@ -98,6 +74,4 @@ volumes:
   mariadb-agents:
     external: true
   mariadb-videos:
-    external: true
-  kafka-logs:
     external: true

@@ -17,8 +17,7 @@ var ErrNothingToRollback = errors.New("No receipt on db.")
 func NewMariaDBAgentsRepository() *MariaDBAgentsRepository {
 
 	// Create the database handle, confirm driver is present
-	//	db, err := sql.Open("mysql", "root:root-password@tcp(agents-mariadb:3306)/managers?parseTime=true")
-	db, err := sql.Open("mysql", "root:root-password@tcp(127.0.0.1:3306)/managers?parseTime=true")
+	db, err := sql.Open("mysql", "root:root-password@tcp(agents-mariadb:3306)/managers?parseTime=true")
 	if err != nil {
 		log.Fatal(err)
 	}

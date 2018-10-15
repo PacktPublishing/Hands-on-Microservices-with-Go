@@ -11,7 +11,7 @@ type RestAgentsRepository struct{}
 
 func (repo *RestAgentsRepository) UpdateAgentAccount(bvsDTO *BuyVideoSagaDTO) error {
 
-	url := "http://127.0.0.1:8083/user/ammount/update"
+	url := "http://127.0.0.1:8083/agent/ammount/update"
 	jsonBytes, err := json.Marshal(bvsDTO)
 	if err != nil {
 		return err
@@ -40,7 +40,7 @@ func (repo *RestAgentsRepository) UpdateAgentAccount(bvsDTO *BuyVideoSagaDTO) er
 
 func (repo *RestAgentsRepository) RollbackUpdateAgentAccount(bvsDTO *BuyVideoSagaDTO) error {
 
-	url := "http://127.0.0.1:8083/user/ammount/rollback"
+	url := "http://127.0.0.1:8083/agent/ammount/rollback"
 	jsonBytes, err := json.Marshal(bvsDTO)
 	if err != nil {
 		return err

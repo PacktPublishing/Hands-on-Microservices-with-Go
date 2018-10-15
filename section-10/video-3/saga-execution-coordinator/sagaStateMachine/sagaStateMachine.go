@@ -1,6 +1,10 @@
 package sagaStateMachine
 
-import "github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-10/video-3/saga-execution-coordinator/repositories"
+import (
+	"log"
+
+	"github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-10/video-3/saga-execution-coordinator/repositories"
+)
 
 type SagaState uint16
 
@@ -31,6 +35,7 @@ const (
 	INSERT_BOUGHT_VIDEO_ROLLBACK_FAILED
 
 	SAGA_UNKNOWN_STATE
+	SAGA_UNHANDLED
 )
 
 type SagaStateMachine struct {
@@ -40,6 +45,7 @@ type SagaStateMachine struct {
 }
 
 func (ssm *SagaStateMachine) ProcessSagaStateAndDecideNextState(currentState SagaState, bvsDTO *repositories.BuyVideoSagaDTO) SagaState {
+
 	switch currentState {
 	case SAGA_START:
 		return INSERT_BOUGHT_VIDEO_START
@@ -47,7 +53,8 @@ func (ssm *SagaStateMachine) ProcessSagaStateAndDecideNextState(currentState Sag
 	case INSERT_BOUGHT_VIDEO_START:
 		err := ssm.InsertBoughtVideo(bvsDTO)
 		if err != nil {
-			return INSERT_BOUGHT_VIDEO_ROLLBACK_START
+			log.Println(err.Error())
+			return INSERT_BOUGHT_VIDEO_ROLLBACK_END
 		}
 		return INSERT_BOUGHT_VIDEO_END
 
@@ -57,7 +64,8 @@ func (ssm *SagaStateMachine) ProcessSagaStateAndDecideNextState(currentState Sag
 	case UPDATE_USER_ACCOUNT_START:
 		err := ssm.UpateUserAccount(bvsDTO)
 		if err != nil {
-			return UPDATE_USER_ACCOUNT_ROLLBACK_START
+			log.Println(err.Error())
+			return UPDATE_USER_ACCOUNT_ROLLBACK_END
 		}
 		return UPDATE_USER_ACCOUNT_END
 
@@ -67,7 +75,8 @@ func (ssm *SagaStateMachine) ProcessSagaStateAndDecideNextState(currentState Sag
 	case UPDATE_AGENT_ACCOUNT_START:
 		err := ssm.UpateAgentAccount(bvsDTO)
 		if err != nil {
-			return UPDATE_AGENT_ACCOUNT_ROLLBACK_START
+			log.Println(err.Error())
+			return UPDATE_AGENT_ACCOUNT_ROLLBACK_END
 		}
 		return UPDATE_AGENT_ACCOUNT_END
 
@@ -75,7 +84,7 @@ func (ssm *SagaStateMachine) ProcessSagaStateAndDecideNextState(currentState Sag
 		return SAGA_END
 
 	case SAGA_UNKNOWN_STATE:
-		return SAGA_ROLLBACK_START
+		return SAGA_UNHANDLED
 
 	case SAGA_ROLLBACK_START:
 		return UPDATE_AGENT_ACCOUNT_ROLLBACK_START
@@ -83,6 +92,7 @@ func (ssm *SagaStateMachine) ProcessSagaStateAndDecideNextState(currentState Sag
 	case UPDATE_AGENT_ACCOUNT_ROLLBACK_START:
 		err := ssm.UpateAgentAccountRollback(bvsDTO)
 		if err != nil {
+			log.Println(err.Error())
 			return UPDATE_AGENT_ACCOUNT_ROLLBACK_FAILED
 		}
 		return UPDATE_AGENT_ACCOUNT_ROLLBACK_END
@@ -93,6 +103,7 @@ func (ssm *SagaStateMachine) ProcessSagaStateAndDecideNextState(currentState Sag
 	case UPDATE_USER_ACCOUNT_ROLLBACK_START:
 		err := ssm.UpateUserAccountRollback(bvsDTO)
 		if err != nil {
+			log.Println(err.Error())
 			return UPDATE_USER_ACCOUNT_ROLLBACK_FAILED
 		}
 		return UPDATE_USER_ACCOUNT_ROLLBACK_END
@@ -103,16 +114,18 @@ func (ssm *SagaStateMachine) ProcessSagaStateAndDecideNextState(currentState Sag
 	case INSERT_BOUGHT_VIDEO_ROLLBACK_START:
 		err := ssm.InsertBoughtVideoRollback(bvsDTO)
 		if err != nil {
+			log.Println(err.Error())
 			return INSERT_BOUGHT_VIDEO_ROLLBACK_FAILED
 		}
 		return INSERT_BOUGHT_VIDEO_ROLLBACK_END
 
 	case INSERT_BOUGHT_VIDEO_ROLLBACK_END:
-		return SAGA_ROLLBACK_START
+		return SAGA_ROLLBACK_END
 
 	case UPDATE_AGENT_ACCOUNT_ROLLBACK_FAILED:
 	case UPDATE_USER_ACCOUNT_ROLLBACK_FAILED:
 	case INSERT_BOUGHT_VIDEO_ROLLBACK_FAILED:
+		return SAGA_UNHANDLED
 		//Harsh error condition.
 		//Not implemented.
 		//You could try retrying after some time for example.
@@ -165,9 +178,12 @@ func SagaStateToString(state SagaState) string {
 		return "UPDATE_AGENT_ACCOUNT_START"
 	case UPDATE_AGENT_ACCOUNT_END:
 		return "UPDATE_AGENT_ACCOUNT_END"
+	case SAGA_END:
+		return "SAGA_END"
 
 	case SAGA_UNKNOWN_STATE:
 		return "SAGA_UNKNOWN_STATE"
+
 	case SAGA_ROLLBACK_START:
 		return "SAGA_ROLLBACK_START"
 	case UPDATE_AGENT_ACCOUNT_ROLLBACK_START:
@@ -182,6 +198,8 @@ func SagaStateToString(state SagaState) string {
 		return "INSERT_BOUGHT_VIDEO_ROLLBACK_START"
 	case INSERT_BOUGHT_VIDEO_ROLLBACK_END:
 		return "INSERT_BOUGHT_VIDEO_ROLLBACK_END"
+	case SAGA_ROLLBACK_END:
+		return "SAGA_ROLLBACK_END"
 
 	case UPDATE_AGENT_ACCOUNT_ROLLBACK_FAILED:
 		return "UPDATE_AGENT_ACCOUNT_ROLLBACK_FAILED"
@@ -189,6 +207,8 @@ func SagaStateToString(state SagaState) string {
 		return "UPDATE_USER_ACCOUNT_ROLLBACK_FAILED"
 	case INSERT_BOUGHT_VIDEO_ROLLBACK_FAILED:
 		return "INSERT_BOUGHT_VIDEO_ROLLBACK_FAILED"
+	case SAGA_UNHANDLED:
+		return "SAGA_UNHANDLED"
 	}
 
 	//UNKNOWN STATE

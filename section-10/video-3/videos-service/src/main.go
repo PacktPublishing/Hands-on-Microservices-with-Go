@@ -23,6 +23,6 @@ func main() {
 	r.HandleFunc("/bought-video", handler.InsertBoughtVideo).Methods("POST")
 	r.HandleFunc("/bought-video", handler.DeleteBoughtVideo).Methods("DELETE")
 
-	fmt.Println("Starting server on Port: 8082")
-	log.Fatal(http.ListenAndServe(":8082", r))
+	fmt.Println("Starting server on Port: 8081")
+	log.Fatal(http.ListenAndServe(":8081", r))
 }
