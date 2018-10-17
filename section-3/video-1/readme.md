@@ -8,6 +8,7 @@
 [Go Documentation - Package JSON](https://golang.org/pkg/encoding/json/)
 
 #### Decoding loose JSON structures in Go
-[JSON decoding in Go[](https://attilaolah.eu/2013/11/29/json-decoding-in-go/)
+
+[JSON decoding in Go](https://attilaolah.eu/2013/11/29/json-decoding-in-go/)
 
 

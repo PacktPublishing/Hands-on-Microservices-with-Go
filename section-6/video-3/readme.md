@@ -50,5 +50,7 @@ sudo docker-compose down
 ```
 
 ## Learn More
+
 [Install Docker Compose](https://docs.docker.com/compose/install/#install-compose)
+
 [Kubernetes](https://kubernetes.io/)

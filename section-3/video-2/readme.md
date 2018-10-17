@@ -3,7 +3,7 @@
 
 ## Learn More
 
-[Go Documentation - Package JSON](https://golang.org/pkg/encoding/xml/)
+[Go Documentation - Package XML](https://golang.org/pkg/encoding/xml/)
 
 [Marshall Map to XML](https://stackoverflow.com/questions/30928770/marshall-map-to-xml-in-go)
 

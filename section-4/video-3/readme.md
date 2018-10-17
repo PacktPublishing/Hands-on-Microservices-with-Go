@@ -60,10 +60,16 @@ userID%10 == 9 => password = "arsenal-de-sarandi"
 ### Learn more
 
 [JWT](https://jwt.io/)
+
 [JSON Web Token Best Current Practices](http://self-issued.info/docs/draft-sheffer-oauth-jwt-bcp-00.html)
+
 [Wikipedia JSON Web Tokens](https://en.wikipedia.org/wiki/JSON_Web_Token)
+
 [JOSE Standard](http://jose.readthedocs.io/en/latest/)
+
 [JWT-Go Package](https://github.com/dgrijalva/jwt-go)
+
 [RFC 7519: JSON Web Token (JWT)](https://tools.ietf.org/html/rfc7519)
+
 [Wikipedia HMAC](https://en.wikipedia.org/wiki/HMAC)
 

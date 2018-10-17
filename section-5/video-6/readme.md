@@ -13,9 +13,13 @@ sudo docker run --net=host --volume=$USERHOME/go/src/github.com/PacktPublishing/
 
 ## Learn More
 
-(Prometheus)[https://prometheus.io/]
-(Prometheus - Histograms and Summaries)[https://prometheus.io/docs/practices/histograms/]
-(Prometheus - Query Language)[https://prometheus.io/docs/prometheus/latest/querying/basics/]
-(Exploring Prometheus Go client metrics)[https://povilasv.me/prometheus-go-metrics/]
-(Grafana)[https://grafana.com/]
+[Prometheus](https://prometheus.io/)
+
+[Prometheus - Histograms and Summaries](https://prometheus.io/docs/practices/histograms/)
+
+[Prometheus - Query Language](https://prometheus.io/docs/prometheus/latest/querying/basics/)
+
+[Exploring Prometheus Go client metrics](https://povilasv.me/prometheus-go-metrics/)
+
+[Grafana](https://grafana.com/)
 
