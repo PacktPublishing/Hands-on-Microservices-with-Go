@@ -38,10 +38,17 @@ func (h *Handlers) UpdateAgentAccount(w http.ResponseWriter, r *http.Request) {
 	}
 	err = h.Repo.UpdateAgentAccount(uua.AgentID, uua.UserID, uua.VideoID, uua.Ammount)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		log.Println(err.Error())
-		w.Write([]byte(err.Error()))
-		return
+		if err == repositories.ErrReceiptAlreadyExists {
+			w.WriteHeader(http.StatusConflict)
+			log.Println(err.Error())
+			w.Write([]byte(err.Error()))
+			return
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+			log.Println(err.Error())
+			w.Write([]byte(err.Error()))
+			return
+		}
 	}
 	w.WriteHeader(http.StatusOK)
 }

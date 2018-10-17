@@ -33,17 +33,16 @@ func (h *Handlers) InsertBoughtVideo(w http.ResponseWriter, r *http.Request) {
 	}
 	err = h.Repo.InsertBoughtVideo(boughtVideo.UserID, boughtVideo.VideoID)
 
-	//To make this fully idempotent
-	//we would have to check if the error
-	//was that the primary key already existed
-	//and handle that the way we handled conflicts on
-	//the other services
-	//Left as an exercise
-
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		log.Println(err.Error())
-		w.Write([]byte(err.Error()))
+		if err == repositories.ErrBoughtVideoAlreadyExists {
+			w.WriteHeader(http.StatusConflict)
+			log.Println(err.Error())
+			w.Write([]byte(err.Error()))
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+			log.Println(err.Error())
+			w.Write([]byte(err.Error()))
+		}
 		return
 	}
 	w.WriteHeader(http.StatusOK)

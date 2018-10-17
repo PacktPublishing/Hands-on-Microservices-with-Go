@@ -31,6 +31,10 @@ func (repo *RestUsersRepository) UpdateUserAccount(bvsDTO *BuyVideoSagaDTO) erro
 	if resp.StatusCode == 500 {
 		return Err500OnRestRequest
 	}
+	//For idempotency
+	if resp.StatusCode == http.StatusConflict {
+		return nil
+	}
 	if resp.StatusCode != 200 {
 		return ErrOnRestRequest
 	}

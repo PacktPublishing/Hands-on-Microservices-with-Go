@@ -29,7 +29,8 @@ go build -a -o ../main main.go
 
 cd $PATH_TO_VIDEO_FOLDER"scripts"
 #RUN DOCKER COMPOSE
-sudo docker-compose up -d --build
+sudo docker-compose build
+sudo docker-compose up -d --build --force-recreate
 
 #RUN KAFKA
 sudo docker run -d --name kafka -v kafka-logs:/var/lib/kafka -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST=127.0.0.1 --env ADVERTISED_PORT=9092 spotify/kafka 

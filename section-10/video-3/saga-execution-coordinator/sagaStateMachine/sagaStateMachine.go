@@ -21,8 +21,6 @@ const (
 	SAGA_END
 
 	//From End to Begining because it's clearer
-	SAGA_ROLLBACK_START
-	UPDATE_AGENT_ACCOUNT_ROLLBACK_START
 	UPDATE_AGENT_ACCOUNT_ROLLBACK_END
 	UPDATE_USER_ACCOUNT_ROLLBACK_START
 	UPDATE_USER_ACCOUNT_ROLLBACK_END
@@ -83,20 +81,6 @@ func (ssm *SagaStateMachine) ProcessSagaStateAndDecideNextState(currentState Sag
 	case UPDATE_AGENT_ACCOUNT_END:
 		return SAGA_END
 
-	case SAGA_UNKNOWN_STATE:
-		return SAGA_UNHANDLED
-
-	case SAGA_ROLLBACK_START:
-		return UPDATE_AGENT_ACCOUNT_ROLLBACK_START
-
-	case UPDATE_AGENT_ACCOUNT_ROLLBACK_START:
-		err := ssm.UpateAgentAccountRollback(bvsDTO)
-		if err != nil {
-			log.Println(err.Error())
-			return UPDATE_AGENT_ACCOUNT_ROLLBACK_FAILED
-		}
-		return UPDATE_AGENT_ACCOUNT_ROLLBACK_END
-
 	case UPDATE_AGENT_ACCOUNT_ROLLBACK_END:
 		return UPDATE_USER_ACCOUNT_ROLLBACK_START
 
@@ -122,7 +106,6 @@ func (ssm *SagaStateMachine) ProcessSagaStateAndDecideNextState(currentState Sag
 	case INSERT_BOUGHT_VIDEO_ROLLBACK_END:
 		return SAGA_ROLLBACK_END
 
-	case UPDATE_AGENT_ACCOUNT_ROLLBACK_FAILED:
 	case UPDATE_USER_ACCOUNT_ROLLBACK_FAILED:
 	case INSERT_BOUGHT_VIDEO_ROLLBACK_FAILED:
 		return SAGA_UNHANDLED
@@ -132,6 +115,8 @@ func (ssm *SagaStateMachine) ProcessSagaStateAndDecideNextState(currentState Sag
 		//Or logging it to another quee for processing once that
 		//part of your system is up again.
 
+	case SAGA_UNKNOWN_STATE:
+		return SAGA_UNHANDLED
 	}
 
 	//UNKNOWN STATE
@@ -184,10 +169,6 @@ func SagaStateToString(state SagaState) string {
 	case SAGA_UNKNOWN_STATE:
 		return "SAGA_UNKNOWN_STATE"
 
-	case SAGA_ROLLBACK_START:
-		return "SAGA_ROLLBACK_START"
-	case UPDATE_AGENT_ACCOUNT_ROLLBACK_START:
-		return "UPDATE_AGENT_ACCOUNT_ROLLBACK_START"
 	case UPDATE_AGENT_ACCOUNT_ROLLBACK_END:
 		return "UPDATE_AGENT_ACCOUNT_ROLLBACK_END"
 	case UPDATE_USER_ACCOUNT_ROLLBACK_START:

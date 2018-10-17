@@ -36,7 +36,12 @@ func (h *Handlers) UpdateUserAccount(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	err = h.Repo.UpdateUserAccount(uua.UserID, uua.VideoID, uua.Ammount)
-	if err != nil {
+	if err == repositories.ErrReceiptAlreadyExists {
+		w.WriteHeader(http.StatusConflict)
+		log.Println(err.Error())
+		w.Write([]byte(err.Error()))
+		return
+	} else {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Println(err.Error())
 		w.Write([]byte(err.Error()))

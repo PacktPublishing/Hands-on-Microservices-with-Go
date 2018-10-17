@@ -13,6 +13,7 @@ type MariaDBUsersRepository struct {
 }
 
 var ErrNothingToRollback = errors.New("No receipt on db.")
+var ErrReceiptAlreadyExists = errors.New("Receipt Already Exists.")
 
 func NewMariaDBUsersRepository() *MariaDBUsersRepository {
 
@@ -49,6 +50,10 @@ func (repo *MariaDBUsersRepository) UpdateUserAccount(userID uint32, videoID uin
 	_, err = tx.Exec(`insert into receipts(user_id, video_id, date) values(?,?, NOW());`, userID, videoID)
 	if err != nil {
 		tx.Rollback()
+		//Error 1062: Duplicate entry '1-1' for key 'PRIMARY'
+		if err.Error()[0:10] == "Error 1062" {
+			return ErrReceiptAlreadyExists
+		}
 		return err
 	}
 

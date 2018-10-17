@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"database/sql"
+	"errors"
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -10,6 +11,8 @@ import (
 type MariaDBVideosRepository struct {
 	db *sql.DB
 }
+
+var ErrBoughtVideoAlreadyExists = errors.New("Bought Video Already Exists.")
 
 func NewMariaDBVideosRepository() *MariaDBVideosRepository {
 
@@ -34,6 +37,10 @@ func (repo *MariaDBVideosRepository) Close() {
 func (repo *MariaDBVideosRepository) InsertBoughtVideo(videoID uint32, userID uint32) error {
 	rows, err := repo.db.Query(`Insert into bought_videos(video_id, user_id) values(?, ?);`, videoID, userID)
 	if err != nil {
+		//Error 1062: Duplicate entry '1-1' for key 'PRIMARY'
+		if err.Error()[0:10] == "Error 1062" {
+			return ErrBoughtVideoAlreadyExists
+		}
 		return err
 	}
 	defer rows.Close()

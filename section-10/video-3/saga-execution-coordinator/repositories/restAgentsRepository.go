@@ -31,6 +31,10 @@ func (repo *RestAgentsRepository) UpdateAgentAccount(bvsDTO *BuyVideoSagaDTO) er
 	if resp.StatusCode == 500 {
 		return Err500OnRestRequest
 	}
+	//For idempotency
+	if resp.StatusCode == http.StatusConflict {
+		return nil
+	}
 	if resp.StatusCode != 200 {
 		return ErrOnRestRequest
 	}
