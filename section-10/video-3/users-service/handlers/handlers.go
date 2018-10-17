@@ -41,7 +41,8 @@ func (h *Handlers) UpdateUserAccount(w http.ResponseWriter, r *http.Request) {
 		log.Println(err.Error())
 		w.Write([]byte(err.Error()))
 		return
-	} else {
+	}
+	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Println(err.Error())
 		w.Write([]byte(err.Error()))

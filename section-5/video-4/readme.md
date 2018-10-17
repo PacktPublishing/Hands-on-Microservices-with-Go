@@ -10,3 +10,11 @@ sudo docker run --name users-cache-redis -p 6379:6379 -d redis
 
 ```
 
+### Learn More
+
+[Packt Publishing - Redis Essentials](https://www.packtpub.com/big-data-and-business-intelligence/redis-essentials)
+
+[Packt Publishing - Learning Redis Video](https://www.packtpub.com/big-data-and-business-intelligence/learning-redis-video)
+
+[Packt Publishing - Mastering Redis](https://www.packtpub.com/big-data-and-business-intelligence/mastering-redis)
+

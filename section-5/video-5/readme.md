@@ -13,6 +13,20 @@ docker run --name load-nginx -v $USERHOME/go/src/github.com/PacktPublishing/Hand
 
 ## Learn More
 
-(Wikipedia Load Balancing)[https://en.wikipedia.org/wiki/Load_balancing_(computing)]
-(Wikipedia Nginx)[https://en.wikipedia.org/wiki/Nginx]
-(Nginx)[https://nginx.org/en/]
+[Wikipedia Load Balancing](https://en.wikipedia.org/wiki/Load_balancing_(computing))
+
+[Wikipedia Nginx](https://en.wikipedia.org/wiki/Nginx)
+
+[Nginx](https://nginx.org/en/)
+
+### Learn Even More
+
+[Packt Publishing - Nginx Essentials](https://www.packtpub.com/networking-and-servers/nginx-essentials)
+
+[Packt Publishing - Cookbook](https://www.packtpub.com/networking-and-servers/nginx)
+
+[Packt Publishing - Nginx HTTP Server](https://www.packtpub.com/networking-and-servers/nginx-http-server)
+
+[Packt Publishing - Mastering NginX](https://www.packtpub.com/networking-and-servers/mastering-nginx-second-edition)
+
+

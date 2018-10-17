@@ -47,7 +47,6 @@ coll.find()
 
 [MongoDB](https://www.mongodb.com/)
 
-
 [Wikipedia's MongoDB Page](https://en.wikipedia.org/wiki/MongoDB)
 
 [Wikipedia's Page on Document Oriented DBs](https://en.wikipedia.org/wiki/Document-oriented_database)
@@ -62,3 +61,10 @@ coll.find()
 
 [MongoDB Security](https://docs.mongodb.com/manual/security/)
 
+### Learn Even More
+
+[Packt Publishing - MongoDB Starting Guide (Free!)](https://www.packtpub.com/packt/free-ebook/mongoDB-starter-guide)
+
+[Packt Publishing - MongoDB Cookbook](https://www.packtpub.com/big-data-and-business-intelligence/mongodb-cookbook)
+
+[Packt Publishing - Developing with MongoDB Video](https://www.packtpub.com/big-data-and-business-intelligence/developing-mongodb-video)
