@@ -2,7 +2,7 @@
 # Section 10 - Video 3 - The Saga Pattern
 
 ## Must Watch
-[Distributed Sagas: A Protocol for Coordinating Microservices - Caitie McCaffrey - JOTB17](https://www.youtube.com/watch?v=0UTOLRTwOX0&list=LLXj2mZvgLzc01NOAljfZwlA&index=12=
+[Distributed Sagas: A Protocol for Coordinating Microservices - Caitie McCaffrey - JOTB17](https://www.youtube.com/watch?v=0UTOLRTwOX0&list=LLXj2mZvgLzc01NOAljfZwlA&index=12=)
 
 [GOTO 2015 • Applying the Saga Pattern • Caitie McCaffrey](https://www.youtube.com/watch?v=xDuwrtwYHu8)
 
@@ -38,4 +38,4 @@ Then run setup-data.sh first and setup.sh .
 
 After that change to the saga-execution-coordinator directory and run main.go
 
-**Warning**: Sometimes the sarama group consumer does not start consuming inmediately. If this happens do an http request to the SEC to start a saga (that will not be processed), stop the SEC and start again and then do another request that will be processed. I really did not have the time to debug the issue, whether it has to do with the Kafka conf of the image we are using or if it's the driver we are using. The thing is once it starts it starts :-). Remeber this is an example, not a reference implementation.
+**Warning**: Sometimes the sarama group consumer does not start consuming inmediately. If this happens do an http request to the SEC to start a saga (that will not be processed), stop the SEC and start again and then do another request that will be processed. I really did not have the time to debug the issue, whether it has to do with the Kafka conf of the image we are using or if it's the driver we are using. The thing is once it starts it starts :-). Remember this is an example, not a reference implementation.
