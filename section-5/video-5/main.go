@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"sync/atomic"
 )
 
 func main() {
@@ -18,11 +19,12 @@ func main() {
 		os.Exit(0)
 	}
 
-	totalRequests := 0
+	totalRequests := uint64(0)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 
-		totalRequests++
+		//Using atomic to prevent Race Conditions
+		atomic.AddUint64(&totalRequests, 1)
 
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, "Recieved Request on Port: %d\n", *port)

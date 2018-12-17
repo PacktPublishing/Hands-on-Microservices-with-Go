@@ -31,6 +31,7 @@ func main() {
 	if err != nil {
 		log.Println("Error Reading Body")
 	}
+	defer resp.Body.Close()
 
 	fmt.Println("Client1:: Recieved:")
 	fmt.Println(string(body))

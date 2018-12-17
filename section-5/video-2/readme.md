@@ -97,4 +97,13 @@ go-torch --file "torch.svg" --url http://localhost:8000
 
 [Flamegraphs](http://www.brendangregg.com/flamegraphs.html)
 
+## Apologies!
+
+Emiliano says: "Sorry about the coughing on the video, I had some health issues during the recording of this video."
+
+## Note
+
+You may look at the performance numbers and think that they are not very good (for example in terms of RPS). Please consider that the video was recorded on a 9 year old desktop computer. So you might ask why are you using such an old computer? Because when developing I know that I will eventually run the software I write on clusters of cheap commodity hardware, so it's good to actually test on an old computer when trying to squeeze as much performance as you can.
+
+
 

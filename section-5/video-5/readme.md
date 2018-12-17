@@ -11,6 +11,10 @@ docker run --name load-nginx -v $USERHOME/go/src/github.com/PacktPublishing/Hand
 
 ```
 
+## Warning
+
+On the video there is a variable that is incremented on every request, on heavy load to the server, this could produce a race condition. This has been changed in the code to incrementig with Go's atomic functions.
+
 ## Learn More
 
 [Wikipedia Load Balancing](https://en.wikipedia.org/wiki/Load_balancing_(computing))

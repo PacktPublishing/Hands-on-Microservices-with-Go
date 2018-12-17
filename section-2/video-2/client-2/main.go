@@ -22,7 +22,9 @@ func main() {
 	if err != nil {
 		log.Println("Error Reading Body")
 	}
-	fmt.Println("Client2:: Recieved:")
+	defer resp.Body.Close()
+
+	fmt.Println("Client2:: Received:")
 	fmt.Println(string(body))
 
 	//Request 2
@@ -36,7 +38,9 @@ func main() {
 	if err != nil {
 		log.Println("Error Reading Body")
 	}
-	fmt.Println("Client2:: Recieved:")
+	defer resp.Body.Close()
+
+	fmt.Println("Client2:: Received:")
 	fmt.Println(string(body))
 
 }
