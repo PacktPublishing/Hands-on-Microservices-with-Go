@@ -3,7 +3,7 @@
 
 ## Disclaimer
 
-The contents of the following video are intended as an **introduction** to securing an http endpoint with https. It is not inteneded as a definitive guide, if your application deals with sensitive data consider consulting the advice of a security professional. Also, consider that new vulnerabilities are discovered every day in security practices and software libraries, so the advice provided here might be obsolete and insecure by the time you read it.
+The contents of the following video are intended as an **introduction** to securing an http endpoint with https. It is not intended as a definitive guide, if your application deals with sensitive data consider consulting the advice of a security professional. Also, consider that new vulnerabilities are discovered every day in security practices and software libraries, so the advice provided here might be obsolete and insecure by the time you read it.
 
 ## Generate Self Signed Certificates
 
@@ -25,7 +25,7 @@ openssl req -new -x509 -sha256 -key client.key -out client.pem -days 3650 -subj 
 
 ```
 
-**Warning:** Self signed certificates are usefull for testing they should never be used in production. Use a CA signed certificate on production applications.
+**Warning:** Self signed certificates are useful for testing they should never be used in production. Use a CA signed certificate on production applications.
 
 
 ## Learn More

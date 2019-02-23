@@ -3,7 +3,7 @@
 
 ## Disclaimer
 
-The contents of the following video are intended as an **introduction** to securing an http endpoint with https. It is not inteneded as a definitive guide, if your application deals with sensitive data consider consulting the advice of a security professional. Also, consider that new vulnerabilities are discovered every day in security practices and software libraries, so the advice provided here might be obsolete and insecure by the time you read it.
+The contents of the following video are intended as an **introduction** to securing an http endpoint with https. It is not intended as a definitive guide, if your application deals with sensitive data consider consulting the advice of a security professional. Also, consider that new vulnerabilities are discovered every day in security practices and software libraries, so the advice provided here might be obsolete and insecure by the time you read it.
 
 ### Build with target OS and Processor Architecture
 

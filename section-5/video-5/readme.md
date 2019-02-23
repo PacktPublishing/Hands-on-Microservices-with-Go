@@ -13,7 +13,7 @@ docker run --name load-nginx -v $USERHOME/go/src/github.com/PacktPublishing/Hand
 
 ## Warning
 
-On the video there is a variable that is incremented on every request, on heavy load to the server, this could produce a race condition. This has been changed in the code to incrementig with Go's atomic functions.
+On the video there is a variable that is incremented on every request, on heavy load to the server, this could produce a race condition. This has been changed in the code to incrementing with Go's atomic functions.
 
 ## Learn More
 
@@ -31,6 +31,6 @@ On the video there is a variable that is incremented on every request, on heavy 
 
 [Packt Publishing - Nginx HTTP Server](https://www.packtpub.com/networking-and-servers/nginx-http-server)
 
-[Packt Publishing - Mastering NginX](https://www.packtpub.com/networking-and-servers/mastering-nginx-second-edition)
+[Packt Publishing - Mastering Nginx](https://www.packtpub.com/networking-and-servers/mastering-nginx-second-edition)
 
 

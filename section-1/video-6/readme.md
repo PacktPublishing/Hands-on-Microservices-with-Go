@@ -3,7 +3,7 @@
 
 ## Starting MongoDB Instance with Docker
 
-`sudo docker run --name s1v6mongo -d -p 27017:27017 mongo` 
+`sudo docker run --name s1v6mongo -d -p 27017:27017 mongo`
 
 ## Entering the Instance and looking around
 
@@ -15,7 +15,7 @@
 
 ### Looking around:
 
-Show all existing Databases: 
+Show all existing Databases:
 
 `show dbs`
 
@@ -53,7 +53,7 @@ coll.find()
 
 [Mongo Shell Quick Reference](https://docs.mongodb.com/manual/reference/mongo-shell/)
 
-[Community Mantained MongoDB Go Driver](https://github.com/globalsign/mgo)
+[Community Maintained MongoDB Go Driver](https://github.com/globalsign/mgo)
 
 [MongoDB Official Go Driver (Not ready for Production yet)](https://github.com/mongodb/mongo-go-driver)
 

@@ -59,7 +59,7 @@ Video 3 - General Strategies for Scaling
 
 Video 4 - Using an In Memory Cache
 
-Video 5 - Load Balancing with NginX
+Video 5 - Load Balancing with Nginx
 
 Video 6 - Instrumentation: Collecting Metrics and monitoring with Prometheus.
 
