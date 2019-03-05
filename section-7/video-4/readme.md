@@ -11,7 +11,7 @@
 [Jaegger](https://github.com/jaegertracing/jaeger)
 [new Relic's Introduction to distributed tracing](https://docs.newrelic.com/docs/apm/distributed-tracing/getting-started/introduction-distributed-tracing)
 
-### Agregators
+### Aggregators
 [GraphQL](https://graphql.org/)
 
 ### Distributed Monolith Antipattern
