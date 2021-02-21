@@ -1,0 +1,296 @@
+{
+	"id": "6024f33c-e82e-4fc2-85d7-b5fb40fca897",
+	"name": "S2V1",
+	"description": null,
+	"auth": null,
+	"events": null,
+	"variables": [],
+	"order": [
+		"4368acf0-432a-4be6-916e-90110bb4e0db",
+		"bc17c5cd-32fb-4933-ad01-13f4b0efa5e8",
+		"ca81228e-36fb-435a-ad24-c39f5962e020",
+		"614481df-e46e-4021-af64-df7e4a864fc2",
+		"b2f8691b-eb14-409c-b75c-380e4a86ea24",
+		"cf38b7dd-d530-4a02-8001-8445b74cb778"
+	],
+	"folders_order": [],
+	"protocolProfileBehavior": {},
+	"folders": [],
+	"requests": [
+		{
+			"id": "4368acf0-432a-4be6-916e-90110bb4e0db",
+			"name": "Example 1 - Get",
+			"url": "http://emiliano:pepe@127.0.0.1:8080/get?query1=hello&query2=world#fragment",
+			"description": null,
+			"data": null,
+			"dataOptions": null,
+			"dataMode": null,
+			"headerData": [
+				{
+					"key": "My-Header",
+					"type": "text",
+					"value": "Example Value"
+				},
+				{
+					"key": "Another-Header",
+					"type": "text",
+					"value": "Another Value"
+				},
+				{
+					"key": "Yet-Another-Header",
+					"type": "text",
+					"value": "Yet Another Value"
+				},
+				{
+					"key": "Referer",
+					"type": "text",
+					"value": "www.example.com"
+				},
+				{
+					"key": "User-Agent",
+					"type": "text",
+					"value": "Postman Client"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "query1",
+					"value": "hello",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "query2",
+					"value": "world",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"headers": "My-Header: Example Value\nAnother-Header: Another Value\nYet-Another-Header: Yet Another Value\nReferer: www.example.com\nUser-Agent: Postman Client\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "614481df-e46e-4021-af64-df7e4a864fc2",
+			"name": "Example 2 - Params in Path",
+			"url": "http://localhost:8080/item/ITEM-ID/page/4",
+			"description": null,
+			"data": null,
+			"dataOptions": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true,
+					"accept": true,
+					"connection": true,
+					"accept-encoding": true
+				}
+			},
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "b2f8691b-eb14-409c-b75c-380e4a86ea24",
+			"name": "Example 2 - Get Method",
+			"url": "http://localhost:8080/example",
+			"description": null,
+			"data": null,
+			"dataOptions": null,
+			"dataMode": null,
+			"headerData": [
+				{
+					"key": "My-Header",
+					"type": "text",
+					"value": "Example Value"
+				},
+				{
+					"key": "Another-Header",
+					"type": "text",
+					"value": "Another Value"
+				},
+				{
+					"key": "Yet-Another-Header",
+					"type": "text",
+					"value": "Yet Another Value"
+				},
+				{
+					"key": "Referer",
+					"type": "text",
+					"value": "www.example.com"
+				},
+				{
+					"key": "User-Agent",
+					"type": "text",
+					"value": "Postman Client"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"headers": "My-Header: Example Value\nAnother-Header: Another Value\nYet-Another-Header: Yet Another Value\nReferer: www.example.com\nUser-Agent: Postman Client\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "bc17c5cd-32fb-4933-ad01-13f4b0efa5e8",
+			"name": "Example 1 - Post",
+			"url": "http://localhost:8080/post",
+			"description": null,
+			"data": [
+				{
+					"key": "Example",
+					"value": "Example Value",
+					"type": "text"
+				},
+				{
+					"key": "Another-Field",
+					"value": "Another Value",
+					"type": "text"
+				},
+				{
+					"key": "Yet-Another-Value",
+					"value": "Yet Another Value",
+					"type": "text"
+				}
+			],
+			"dataOptions": null,
+			"dataMode": "urlencoded",
+			"headerData": [],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true,
+					"user-agent": true
+				}
+			},
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "ca81228e-36fb-435a-ad24-c39f5962e020",
+			"name": "Example 1 - Post + Query",
+			"url": "http://localhost:8080/post?query-param=query-values",
+			"description": null,
+			"data": [
+				{
+					"key": "Example",
+					"value": "Example Value",
+					"type": "text"
+				},
+				{
+					"key": "Another-Field",
+					"value": "Another Value",
+					"type": "text"
+				},
+				{
+					"key": "Yet-Another-Value",
+					"value": "Yet Another Value",
+					"type": "text"
+				}
+			],
+			"dataOptions": null,
+			"dataMode": "urlencoded",
+			"headerData": [],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [
+				{
+					"key": "query-param",
+					"value": "query-values",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "cf38b7dd-d530-4a02-8001-8445b74cb778",
+			"name": "Example 2 - Post Method",
+			"url": "http://localhost:8080/example",
+			"description": null,
+			"data": null,
+			"dataOptions": null,
+			"dataMode": null,
+			"headerData": [
+				{
+					"key": "My-Header",
+					"type": "text",
+					"value": "Example Value"
+				},
+				{
+					"key": "Another-Header",
+					"type": "text",
+					"value": "Another Value"
+				},
+				{
+					"key": "Yet-Another-Header",
+					"type": "text",
+					"value": "Yet Another Value"
+				},
+				{
+					"key": "Referer",
+					"type": "text",
+					"value": "www.example.com"
+				},
+				{
+					"key": "User-Agent",
+					"type": "text",
+					"value": "Postman Client"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": null,
+			"folder": null,
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true
+				}
+			},
+			"headers": "My-Header: Example Value\nAnother-Header: Another Value\nYet-Another-Header: Yet Another Value\nReferer: www.example.com\nUser-Agent: Postman Client\n",
+			"pathVariables": {}
+		}
+	]
+}
